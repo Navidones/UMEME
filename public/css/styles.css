@@ -1,0 +1,103 @@
+body {
+    background-color: #d1f9d1; /* Light green background */
+    text-transform: uppercase;
+    font-family: 'Arial', sans-serif;
+}
+
+form {
+    max-width: 1000px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #4caf50; /* Dark green color */
+}
+
+h3 {
+    color: #4caf50; /* Dark green color */
+}
+
+/* Fieldset Styles */
+fieldset {
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+}
+
+legend {
+    color: #4caf50; /* Dark green color */
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* Label Styles */
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* Input Styles */
+input[type="text"],
+input[type="email"],
+input[type="date"],
+input[type="number"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    text-transform: uppercase;
+}
+
+textarea {
+    height: 100px;
+}
+
+/* Button Styles */
+input[type="submit"] {
+    background-color: #4caf50; /* Dark green button color */
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    text-transform: uppercase;
+}
+
+
+/* Responsive Styles */
+@media screen and (max-width: 600px) {
+    input[type="text"],
+    input[type="email"],
+    input[type="date"],
+    input[type="number"],
+    textarea {
+        width: 100%;
+    }
+}
