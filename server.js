@@ -4,7 +4,7 @@ const path = require('path');
 const admin = require('firebase-admin');
 // const puppeteer = require('puppeteer');
 const puppeteer = require('puppeteer-core');
-const serviceAccount = require('./umeme-d19d2-firebase-adminsdk-tvm2y-1c628bdedb.json');
+const serviceAccount = require('./umeme.json');
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
