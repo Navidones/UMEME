@@ -8,8 +8,13 @@
     "pdfkit": "^0.14.0",
     "puppeteer": "^21.7.0"
   },
+  "engines": {
+    "node": "14.x",
+    "npm": "7.x"
+  },
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "build": "npm install"
   },
   "name": "umeme",
   "version": "1.0.0",
