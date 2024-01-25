@@ -5,14 +5,13 @@ const admin = require('firebase-admin');
 // const puppeteer = require('puppeteer');
 const puppeteer = require('puppeteer-core');
 const serviceAccount = require('./umeme.json');
- 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
 
 const db = admin.firestore();
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.json());
