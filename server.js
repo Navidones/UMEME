@@ -4,8 +4,8 @@ const path = require('path');
 const admin = require('firebase-admin');
 // const puppeteer = require('puppeteer');
 const puppeteer = require('puppeteer-core');
-const serviceAccount = require('./umeme-d19d2-firebase-adminsdk-tvm2y-1c628bdedb.json');
-
+const serviceAccount = require('./umeme.json');
+ 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
@@ -358,6 +358,6 @@ app.get('/export-pdf/:id', async (req, res) => {
 });
 
 
-app.listen(port, () => {
-  console.log(`Server is listening at http://localhost:${port}`);
+app.listen(port, '0.0.0.0', () => {
+  console.log(`Server is running at http://localhost:${port}`);
 });
