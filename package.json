@@ -1,4 +1,16 @@
 {
+  "name": "umeme",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "build": "npm install"
+  },
+  "engines": {
+    "node": "16.x",
+    "npm": "7.x"
+  },
   "dependencies": {
     "body-parser": "^1.20.2",
     "ejs": "^3.1.9",
@@ -8,17 +20,6 @@
     "pdfkit": "^0.14.0",
     "puppeteer": "^21.7.0"
   },
-  "engines": {
-    "node": "14.x",
-    "npm": "7.x"
-  },
-  "scripts": {
-    "start": "node server.js",
-    "build": "npm install"
-  },
-  "name": "umeme",
-  "version": "1.0.0",
-  "main": "server.js",
   "devDependencies": {},
   "repository": {
     "type": "git",
@@ -29,6 +30,5 @@
   "bugs": {
     "url": "https://github.com/Navidons/UMEME/issues"
   },
-  "homepage": "https://github.com/Navidons/UMEME#readme",
-  "description": ""
+  "homepage": "https://github.com/Navidons/UMEME#readme"
 }
