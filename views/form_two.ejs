@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Distribution Transformer O & M Check/Inspection</title>
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 20px;
+        }
+
+        fieldset {
+            background-color: #e0f7fa;
+            border: 1px solid #26a69a;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        legend {
+            color: #004d40;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        label {
+            color: #004d40;
+        }
+
+        .form-control {
+            border-radius: 3px;
+        }
+
+        table {
+            margin-top: 10px;
+        }
+
+        th,
+        td {
+            text-align: center;
+        }
+
+        .btn-add {
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        .btn-add:hover {
+            background-color: #45a049;
+        }
+
+        .btn-submit {
+            background-color: #2196F3;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        .btn-submit:hover {
+            background-color: #0b7dda;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h2 class="mt-4 mb-4">DISTRIBUTION TRANSFORMER O & M CHECK/INSPECTION</h2>
+
+        <form form method="post" id="formTwo" action="/submit-form-two">
+            <!-- section a starts -->
+            <section>
+                <fieldset>
+                    <legend>SECTION A - SUBSTATION DETAILS/IDENTIFICATION INFORMATION</legend>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="transformerName">Transformer Name:</label>
+                            <input type="text" class="form-control" id="transformerName" name="transformerName">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="serialNumber">Serial Number:</label>
+                            <input type="text" class="form-control" id="serialNumber" name="serialNumber">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="location">Location:</label>
+                            <input type="text" class="form-control" id="location" name="location">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="feederName">Feeder Name:</label>
+                            <input type="text" class="form-control" id="feederName" name="feederName">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="rating">Rating:</label>
+                            <input type="text" class="form-control" id="rating" name="rating">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="gpsX">GPS (X-Cordinates):</label>
+                            <input type="text" class="form-control" id="gpsX" name="gpsX">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="gpsY">GPS (Y-Cordinates):</label>
+                            <input type="text" class="form-control" id="gpsY" name="gpsY">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="date">Date:</label>
+                            <input type="date" class="form-control" id="date" name="date">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="locationNumber">Location Number:</label>
+                            <input type="text" class="form-control" id="locationNumber" name="locationNumber">
+                        </div>
+                        <!-- Add more fields as needed -->
+                    </div>
+
+                </fieldset>
+            </section>
+
+            <!-- end of section A -->
+            <!-- starting section B -->
+
+            <section>
+                <fieldset>
+                    <legend>SECTION B - PROTECTION DETAILS</legend>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="htProtection">HT PROTECTION:</label>
+                            <input type="text" class="form-control" id="htProtection" name="htProtection">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="dropoutIsolators">Dropout Isolators:</label>
+                            <input type="text" class="form-control" id="dropoutIsolators" name="dropoutIsolators">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="abs">ABS:</label>
+                            <input type="text" class="form-control" id="abs" name="abs">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="htTypes">HT Link Types:</label>
+                            <input type="text" class="form-control" id="htTypes" name="htTypes">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="padlock">Padlock:</label>
+                            <input type="text" class="form-control" id="padlock" name="padlock">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="lvProtectionses">LV PROTECTIONSES:</label>
+                            <input type="text" class="form-control" id="lvProtectionses" name="lvProtectionses">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="noCircuits">No. Circuits:</label>
+                            <input type="text" class="form-control" id="noCircuits" name="noCircuits">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="cbs">CBs:</label>
+                            <input type="text" class="form-control" id="cbs" name="cbs">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="cutOuts">Cut-outs:</label>
+                            <input type="text" class="form-control" id="cutOuts" name="cutOuts">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="ratingOfCbsFuses">Rating of CBs/Fuses:</label>
+                            <input type="text" class="form-control" id="ratingOfCbsFuses" name="ratingOfCbsFuses">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="surgeArrestors">Surge Arrestors:</label>
+                            <input type="text" class="form-control" id="surgeArrestors" name="surgeArrestors">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="hvEarth">HV EARTH:</label>
+                            <input type="text" class="form-control" id="hvEarth" name="hvEarth">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="lvEarth">LV EARTH:</label>
+                            <input type="text" class="form-control" id="lvEarth" name="lvEarth">
+                        </div>
+                        <!-- Add more fields as needed -->
+                    </div>
+
+                </fieldset>
+            </section>
+            <!-- end of section B -->
+
+            <!-- start of section C -->
+
+            <section>
+                <fieldset>
+                    <legend>SECTION C - STATION INSTALLATION DETAILS</legend>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="txStructureStatus">Tx Structure Status:</label>
+                            <input type="text" class="form-control" id="txStructureStatus" name="txStructureStatus">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="txWiringStatus">Tx Wiring Status:</label>
+                            <input type="text" class="form-control" id="txWiringStatus" name="txWiringStatus">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="accessibilityToTxStatus">Accessibility to Tx Status:</label>
+                            <input type="text" class="form-control" id="accessibilityToTxStatus"
+                                name="accessibilityToTxStatus">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="expectedFutureGrowthStatus">Expected Future Growth Status:</label>
+                            <input type="text" class="form-control" id="expectedFutureGrowthStatus"
+                                name="expectedFutureGrowthStatus">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="riskToVandalismStatus">Risk to Vandalism Status:</label>
+                            <input type="text" class="form-control" id="riskToVandalismStatus"
+                                name="riskToVandalismStatus">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="wiringTerminationsLugsCbs">Wiring Terminations Lugs-Cbs:</label>
+                            <input type="text" class="form-control" id="wiringTerminationsLugsCbs"
+                                name="wiringTerminationsLugsCbs">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="wiringTerminationsLugsBushing">Wiring Terminations Lugs-Bushing:</label>
+                            <input type="text" class="form-control" id="wiringTerminationsLugsBushing"
+                                name="wiringTerminationsLugsBushing">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="pgClamps">PG Clamps(Outaging Jumbers):</label>
+                            <input type="text" class="form-control" id="pgClamps" name="pgClamps">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="surgeArrestorsConnection">Surge Arrestors Connection:</label>
+                            <input type="text" class="form-control" id="surgeArrestorsConnection"
+                                name="surgeArrestorsConnection">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="oilLevelLeakageSigns">Oil Level/Leakage Signs:</label>
+                            <input type="text" class="form-control" id="oilLevelLeakageSigns"
+                                name="oilLevelLeakageSigns">
+                        </div>
+                    </div>
+
+                </fieldset>
+            </section>
+            <!-- end fo section C -->
+            <!-- start of section D -->
+
+            <section>
+                <fieldset>
+                    <legend>SECTION D - OTHER REMARKS</legend>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="otherRemarks">Other Remarks:</label>
+                            <textarea class="form-control" id="otherRemarks" name="otherRemarks" rows="4"></textarea>
+                        </div>
+                    </div>
+                </fieldset>
+            </section>
+            <!-- end of section D -->
+
+            <!-- start of section E -->
+
+            <section>
+                <fieldset>
+                    <legend>SECTION E - MATERIALS REQUIRED</legend>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>S/N</th>
+                                <th>Material Description</th>
+                                <th>Qty</th>
+                            </tr>
+                        </thead>
+                        <tbody id="materialsTableBody">
+                            <tr>
+                                <td>1</td>
+                                <td><input type="text" class="form-control" name="material1"></td>
+                                <td><input type="text" class="form-control" name="qty1"></td>
+                            </tr>
+                            <!-- Add more rows dynamically using JavaScript -->
+                        </tbody>
+                    </table>
+                    <button type="button" class="btn btn-primary" onclick="addMaterialRow()">Add</button>
+                </fieldset>
+            </section>
+
+            <!-- end of section E -->
+            <!-- start of section E -->
+
+            <section>
+                <fieldset>
+                    <legend>SECTION F - ACTION TAKEN IF ANY</legend>
+                    <textarea class="form-control" id="actionTaken" name="actionTaken" rows="4"></textarea>
+                </fieldset>
+            </section>
+
+            <section>
+                <fieldset>
+                    <legend>SECTION G</legend>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="inspectedBy">Inspected by:</label>
+                            <input type="text" class="form-control" id="inspectedBy" name="inspectedBy">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="signature">Signature:</label>
+                            <input type="text" class="form-control" id="signature" name="signature">
+                        </div>
+                    </div>
+                </fieldset>
+            </section>
+            <!-- end of section G -->
+            <div class="text-center">
+                <button class="btn btn-submit" type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function addMaterialRow() {
+            var tableBody = document.getElementById('materialsTableBody');
+            var rowCount = tableBody.rows.length + 1;
+
+            var newRow = tableBody.insertRow(tableBody.rows.length);
+            var cell1 = newRow.insertCell(0);
+            var cell2 = newRow.insertCell(1);
+            var cell3 = newRow.insertCell(2);
+
+            cell1.innerHTML = rowCount;
+            cell2.innerHTML = '<input type="text" class="form-control" name="material' + rowCount + '">';
+            cell3.innerHTML = '<input type="text" class="form-control" name="qty' + rowCount + '">';
+        }
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var myForm = document.getElementById("formTwo");
+
+            myForm.addEventListener("submit", function (event) {
+                event.preventDefault(); // Prevents the default form submission
+
+                // Collect form data
+                var formData = new FormData(myForm);
+                var jsonData = {};
+
+                // Convert FormData to JSON
+                formData.forEach((value, key) => {
+                    jsonData[key] = value;
+                });
+
+                // Submit the form data to the server using Fetch API
+                fetch("/submit-form-two", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(jsonData),
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            // Server returned an error response
+                            throw new Error(`Server error: ${response.statusText}`);
+                        }
+                        return response.json(); // Assuming the server returns a JSON response
+                    })
+                    .then(data => {
+                        // Handle the success response
+                        alert(data.message); // Use the received message as the alert content
+                        // Optionally, reset the form
+                        myForm.reset();
+                    })
+                    .catch(error => {
+                        // Handle the error
+                        console.error(error); // Log the detailed error to the console
+                        alert("Form submission failed. Please try again."); // You can replace this with a custom pop-up/modal
+                    });
+            });
+        });
+
+    </script>
+    <!-- Bootstrap JS and Popper.js CDN -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

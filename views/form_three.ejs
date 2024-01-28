@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UMEME LIMITED - Transformer Commissioning Report</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 20px;
+        }
+
+        fieldset {
+            background-color: #e0f7fa;
+            border: 1px solid #26a69a;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        legend {
+            color: #004d40;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        label {
+            color: #004d40;
+        }
+
+        .form-control {
+            border-radius: 3px;
+        }
+
+        table {
+            margin-top: 10px;
+        }
+
+        th,
+        td {
+            text-align: center;
+        }
+
+        .btn-submit {
+            background-color: #2196F3;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        .btn-submit:hover {
+            background-color: #0b7dda;
+        }
+    </style>
+</head>
+
+<body>
+
+    <form action="/submit-form-three" id="formThree" method="post">
+        <section>
+            <fieldset>
+                <legend>SECTION A</legend>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="district">District:</label>
+                        <input type="text" class="form-control" id="district" name="district">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="region">Region:</label>
+                        <input type="text" class="form-control" id="region" name="region">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="from">From:</label>
+                        <input type="text" class="form-control" id="from" name="from">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="to">To:</label>
+                        <input type="text" class="form-control" id="to" name="to">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="date">Date:</label>
+                        <input type="date" class="form-control" id="date" name="date">
+                    </div>
+                </div>
+            </fieldset>
+        </section>
+    
+        <section>
+            <fieldset>
+                <legend>SECTION B</legend>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="location">Location:</label>
+                        <input type="text" class="form-control" id="location" name="location">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="substationName">Substation Name:</label>
+                        <input type="text" class="form-control" id="substationName" name="substationName">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="substationNo">Substation No:</label>
+                        <input type="text" class="form-control" id="substationNo" name="substationNo">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="feederName">Feeder Name:</label>
+                        <input type="text" class="form-control" id="feederName" name="feederName">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="sourceSubstation">Source Substation:</label>
+                        <input type="text" class="form-control" id="sourceSubstation" name="sourceSubstation">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="gps">GPS:</label>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="xCoordinates">X - Coordinates:</label>
+                                <input type="text" class="form-control" id="xCoordinates" name="xCoordinates">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="yCoordinates">Y - Coordinates:</label>
+                                <input type="text" class="form-control" id="yCoordinates" name="yCoordinates">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </section>
+    
+        <section>
+            <fieldset>
+                <legend>SECTION C</legend>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="make">Make:</label>
+                        <input type="text" class="form-control" id="make" name="make">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="kvaRating">KVA Rating:</label>
+                        <input type="text" class="form-control" id="kvaRating" name="kvaRating">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="numOfPhases">Number of Phases:</label>
+                        <input type="text" class="form-control" id="numOfPhases" name="numOfPhases">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="yearOfManufacture">Year of Manufacture:</label>
+                        <input type="text" class="form-control" id="yearOfManufacture" name="yearOfManufacture">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="serialNumber">Serial Number:</label>
+                        <input type="text" class="form-control" id="serialNumber" name="serialNumber">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="voltageRating">Voltage Rating:</label>
+                        <input type="text" class="form-control" id="voltageRating" name="voltageRating">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="umemeNumber">UMEME Number:</label>
+                        <input type="text" class="form-control" id="umemeNumber" name="umemeNumber">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="dateInstalled">Date Installed:</label>
+                        <input type="date" class="form-control" id="dateInstalled" name="dateInstalled">
+                    </div>
+                </div>
+            </fieldset>
+        </section>
+    
+        <section>
+            <fieldset>
+                <legend>SECTION D</legend>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="windingInsulation">Winding Insulation:</label>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="hvToLv">HV - LV:</label>
+                                <input type="text" class="form-control" id="hvToLv" name="hvToLv">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="hvToE">HV - E:</label>
+                                <input type="text" class="form-control" id="hvToE" name="hvToE">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="lvToE">LV - E:</label>
+                                <input type="text" class="form-control" id="lvToE" name="lvToE">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="insulationResistance">Insulation Resistance of Surge Arrestors:</label>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="redInsulationResistance">Red (G.OMH):</label>
+                                <input type="text" class="form-control" id="redInsulationResistance"
+                                    name="redInsulationResistance">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="yellowInsulationResistance">Yellow (G.OMH):</label>
+                                <input type="text" class="form-control" id="yellowInsulationResistance"
+                                    name="yellowInsulationResistance">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="blueInsulationResistance">Blue (G.OMH):</label>
+                                <input type="text" class="form-control" id="blueInsulationResistance"
+                                    name="blueInsulationResistance">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="silicaGelCondition">Condition of Silica Gel If Applicable:</label>
+                        <input type="text" class="form-control" id="silicaGelCondition" name="silicaGelCondition">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="earthing">Earthing:</label>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="htEarth">HT (OHMS):</label>
+                                <input type="text" class="form-control" id="htEarth" name="htEarth">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="lvEarth">LV (OHMS):</label>
+                                <input type="text" class="form-control" id="lvEarth" name="lvEarth">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="fuseRatingsHT">Fuse Ratings HT:</label>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="redFuseRatingsHT">Red (G.OMH):</label>
+                                <input type="text" class="form-control" id="redFuseRatingsHT" name="redFuseRatingsHT">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="yellowFuseRatingsHT">Yellow (G.OMH):</label>
+                                <input type="text" class="form-control" id="yellowFuseRatingsHT" name="yellowFuseRatingsHT">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="blueFuseRatingsHT">Blue (G.OMH):</label>
+                                <input type="text" class="form-control" id="blueFuseRatingsHT" name="blueFuseRatingsHT">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="fuseRatingsLV">LV: Fuse Ratings:</label>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label for="circuitA">Circuit A:</label>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="redCircuitA">Red (OMH):</label>
+                                        <input type="text" class="form-control" id="redCircuitA" name="redCircuitA">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="yellowCircuitA">Yellow (OMH):</label>
+                                        <input type="text" class="form-control" id="yellowCircuitA" name="yellowCircuitA">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="blueCircuitA">Blue (OMH):</label>
+                                        <input type="text" class="form-control" id="blueCircuitA" name="blueCircuitA">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label for="circuitB">Circuit B:</label>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="redCircuitB">Red (OMH):</label>
+                                        <input type="text" class="form-control" id="redCircuitB" name="redCircuitB">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="yellowCircuitB">Yellow (OMH):</label>
+                                        <input type="text" class="form-control" id="yellowCircuitB" name="yellowCircuitB">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="blueCircuitB">Blue (OMH):</label>
+                                        <input type="text" class="form-control" id="blueCircuitB" name="blueCircuitB">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="numOfLVCircuits">Number of LV Circuits:</label>
+                        <input type="text" class="form-control" id="numOfLVCircuits" name="numOfLVCircuits">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="radiusOfLVNetwork">Radius of LV Network:</label>
+                        <input type="text" class="form-control" id="radiusOfLVNetwork" name="radiusOfLVNetwork">
+                    </div>
+                </div>
+            </fieldset>
+        </section>
+    
+        <section>
+            <fieldset>
+                <legend>SECTION F</legend>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="tapPosition">Tap Position 03:</label>
+                        <input type="text" class="form-control" id="tapPosition" name="tapPosition">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="noLoadVoltages">No-Load Voltages:</label>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="ryVolts">R-Y(VOLTS):</label>
+                                <input type="text" class="form-control" id="ryVolts" name="ryVolts">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="rbVolts">R-B(VOLTS):</label>
+                                <input type="text" class="form-control" id="rbVolts" name="rbVolts">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="ybVolts">Y-B(VOLTS):</label>
+                                <input type="text" class="form-control" id="ybVolts" name="ybVolts">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="rnVolts">R-N(VOLTS):</label>
+                                <input type="text" class="form-control" id="rnVolts" name="rnVolts">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="ynVolts">Y-N(VOLTS):</label>
+                                <input type="text" class="form-control" id="ynVolts" name="ynVolts">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="bnVolts">B-N(VOLTS):</label>
+                                <input type="text" class="form-control" id="bnVolts" name="bnVolts">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="peakLoadVoltages">Peak-Load Voltages:</label>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="rypeakVolts">R-Y(VOLTS):</label>
+                                <input type="text" class="form-control" id="rypeakVolts" name="rypeakVolts">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="rbpeakVolts">R-B(VOLTS):</label>
+                                <input type="text" class="form-control" id="rbpeakVolts" name="rbpeakVolts">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="ybpeakVolts">Y-B(VOLTS):</label>
+                                <input type="text" class="form-control" id="ybpeakVolts" name="ybpeakVolts">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="rnpeakVolts">R-N(VOLTS):</label>
+                                <input type="text" class="form-control" id="rnpeakVolts" name="rnpeakVolts">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="ynpeakVolts">Y-N(VOLTS):</label>
+                                <input type="text" class="form-control" id="ynpeakVolts" name="ynpeakVolts">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="bnpeakVolts">B-N(VOLTS):</label>
+                                <input type="text" class="form-control" id="bnpeakVolts" name="bnpeakVolts">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </section>
+    
+        <section>
+            <fieldset>
+                <legend>SECTION G</legend>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="peakLoadCurrentReadings">Peak Load Current Readings:</label>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="circuitADate">Date:</label>
+                                <input type="date" class="form-control" id="circuitADate" name="circuitADate">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="circuitATime">Time:</label>
+                                <input type="time" class="form-control" id="circuitATime" name="circuitATime">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="circuitAReadings">Circuit A:</label>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="redCircuitA">Red (OMH):</label>
+                                <input type="text" class="form-control" id="redCircuitA" name="redCircuitA">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="yellowCircuitA">Yellow (OMH):</label>
+                                <input type="text" class="form-control" id="yellowCircuitA" name="yellowCircuitA">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="blueCircuitA">Blue (OMH):</label>
+                                <input type="text" class="form-control" id="blueCircuitA" name="blueCircuitA">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="circuitBReadings">Circuit B:</label>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="redCircuitB">Red (OMH):</label>
+                                <input type="text" class="form-control" id="redCircuitB" name="redCircuitB">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="yellowCircuitB">Yellow (OMH):</label>
+                                <input type="text" class="form-control" id="yellowCircuitB" name="yellowCircuitB">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="blueCircuitB">Blue (OMH):</label>
+                                <input type="text" class="form-control" id="blueCircuitB" name="blueCircuitB">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </section>
+    
+        <section>
+            <fieldset>
+                <legend>SECTION H</legend>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="generalCondition">General Condition of the Transformer Wiring and Lugs:</label>
+                        <textarea class="form-control" id="generalCondition" name="generalCondition"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="dateCommissioned">Date Commissioned:</label>
+                        <input type="date" class="form-control" id="dateCommissioned" name="dateCommissioned">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="remarks">Remarks (I CERTIFY THAT):</label>
+                        <input type="text" class="form-control" id="remarks" name="remarks">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="certifiedBy">Commissioned By:</label>
+                        <input type="text" class="form-control" id="certifiedBy" name="certifiedBy">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="signature">Signature:</label>
+                        <input type="text" class="form-control" id="signature" name="signature">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="commissionedDate">Date:</label>
+                        <input type="date" class="form-control" id="commissionedDate" name="commissionedDate">
+                    </div>
+                </div>
+            </fieldset>
+        </section>
+    
+        <section>
+            <fieldset>
+                <legend>SECTION I</legend>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="confirmation">I CONFIRM THAT:</label>
+                        <ol>
+                            <li>The transformer has been updated in GIS.</li>
+                            <li>The transformer location number has been allocated.</li>
+                            <li>The as-built network diagram has been attached.</li>
+                        </ol>
+                    </div>
+                </div>
+            </fieldset>
+        </section>
+        <button class="btn btn-submit" type="submit">Submit</button>
+    </form>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var myForm = document.getElementById("formThree");
+
+            myForm.addEventListener("submit", function (event) {
+                event.preventDefault(); // Prevents the default form submission
+
+                // Collect form data
+                var formData = new FormData(myForm);
+                var jsonData = {};
+
+                // Convert FormData to JSON
+                formData.forEach((value, key) => {
+                    jsonData[key] = value;
+                });
+
+                // Submit the form data to the server using Fetch API
+                fetch("/submit-form-three", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(jsonData),
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            // Server returned an error response
+                            throw new Error(`Server error: ${response.statusText}`);
+                        }
+                        return response.json(); // Assuming the server returns a JSON response
+                    })
+                    .then(data => {
+                        // Handle the success response
+                        alert(data.message); // Use the received message as the alert content
+                        // Optionally, reset the form
+                        myForm.reset();
+                    })
+                    .catch(error => {
+                        // Handle the error
+                        console.error(error); // Log the detailed error to the console
+                        alert("Form submission failed. Please try again."); // You can replace this with a custom pop-up/modal
+                    });
+            });
+        });
+    </script>
+</body>
+
+</html>

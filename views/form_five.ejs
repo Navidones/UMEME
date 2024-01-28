@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HAZARD IDENTIFICATION FORM</title>
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<style type="text/css">
+       body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f5f5f5;
+        margin: 20px;
+    }
+
+    fieldset {
+        background-color: #e0f7fa;
+        border: 1px solid #26a69a;
+        border-radius: 5px;
+        margin-bottom: 20px;
+    }
+
+    legend {
+        color: #004d40;
+        font-size: 1.2em;
+        font-weight: bold;
+    }
+
+    label {
+        color: #004d40;
+    }
+
+    .form-control {
+        border-radius: 3px;
+    }
+
+    table {
+        margin-top: 10px;
+    }
+
+    th,
+    td {
+        text-align: center;
+    }
+
+    .btn-submit {
+        background-color: #2196F3;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+
+    .btn-submit:hover {
+        background-color: #0b7dda;
+    }
+</style>
+<body>
+<form action="/submit-form-five" method="post" id="formFive">
+        <section>
+        <fieldset>
+            <legend>SECTION A</legend>
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="hazard">Hazard:</label>
+                    <input type="text" class="form-control" id="hazard" name="hazard">
+                </div>
+                <div class="col-md-6">
+                    <label for="location">Location:</label>
+                    <input type="text" class="form-control" id="location" name="location">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="urgency">Urgency:</label>
+                    <select class="form-control" id="urgency" name="urgency">
+                        <option value="RED1">Red 1</option>
+                        <option value="RED2">Red 2</option>
+                        <option value="AMBER">Amber</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="teamRequired">Team Required:</label>
+                    <select class="form-control" id="teamRequired" name="teamRequired">
+                        <option value="MAINTENANCE">Maintenance</option>
+                        <option value="LINECLEARANCE">Line Clearance</option>
+                        <option value="UNDERGROUND">Underground</option>
+                    </select>
+                </div>
+            </div>
+        </fieldset>
+    </section>
+
+    <section>
+        <fieldset>
+            <legend>SECTION B</legend>
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="transformer">Transformer:</label>
+                    <input type="text" class="form-control" id="transformer" name="transformer">
+                </div>
+                <div class="col-md-6">
+                    <label for="substation">Substation:</label>
+                    <input type="text" class="form-control" id="substation" name="substation">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="feeder">Feeder:</label>
+                    <input type="text" class="form-control" id="feeder" name="feeder">
+                </div>
+                <div class="col-md-6">
+                    <label for="actionTaken">Action Taken:</label>
+                    <select class="form-control" id="actionTaken" name="actionTaken">
+                        <option value="TEMPORARYGIVEN">Temporary Given</option>
+                        <option value="PERMANENTFIX">Permanent Fix</option>
+                        <option value="ISOLATED">Isolated</option>
+                        <option value="NONE">None</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="gpsX">GPS X-Cordinates:</label>
+                    <input type="text" class="form-control" id="gpsX" name="gpsX">
+                </div>
+                <div class="col-md-6">
+                    <label for="gpsY">GPS Y-Cordinates:</label>
+                    <input type="text" class="form-control" id="gpsY" name="gpsY">
+                </div>
+            </div>
+        </fieldset>
+    </section>
+
+    <section>
+        <fieldset>
+            <legend>SECTION C</legend>
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="photo1">Photo 1:</label>
+                    <input type="file" class="form-control" id="photo1" name="photo1">
+                </div>
+                <div class="col-md-4">
+                    <label for="photo2">Photo 2:</label>
+                    <input type="file" class="form-control" id="photo2" name="photo2">
+                </div>
+                <div class="col-md-4">
+                    <label for="photo3">Photo 3:</label>
+                    <input type="file" class="form-control" id="photo3" name="photo3">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="incidenceNumber">Incidence Number:</label>
+                    <input type="text" class="form-control" id="incidenceNumber" name="incidenceNumber">
+                </div>
+                <div class="col-md-6">
+                    <label for="currentDateTime">Current Date and Time:</label>
+                    <input type="datetime-local" class="form-control" id="currentDateTime" name="currentDateTime">
+                </div>
+            </div>
+        </fieldset>
+    </section>
+    <button class="btn btn-submit" type="submit">Submit</button>
+</form>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var myForm = document.getElementById("formFive");
+
+        myForm.addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevents the default form submission
+
+            // Create FormData object to handle file uploads
+            var formData = new FormData(myForm);
+
+            // Submit the form data to the server using Fetch API
+            fetch("/submit-form-five", {
+                method: "POST",
+                body: formData, // Use FormData directly, no need to convert to JSON
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        // Server returned an error response
+                        throw new Error(`Server error: ${response.statusText}`);
+                    }
+                    return response.json(); // Assuming the server returns a JSON response
+                })
+                .then(data => {
+                    // Handle the success response
+                    alert(data.message); // Use the received message as the alert content
+                    // Optionally, reset the form
+                    myForm.reset();
+                })
+                .catch(error => {
+                    // Handle the error
+                    console.error(error); // Log the detailed error to the console
+                    alert("Form submission failed. Please try again."); // You can replace this with a custom pop-up/modal
+                });
+        });
+    });
+</script>
+</body>
+</html>

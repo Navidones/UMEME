@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T-OFF / RMU / INSPECTION FORM</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f5f5f5;
+        margin: 20px;
+    }
+
+    fieldset {
+        background-color: #e0f7fa;
+        border: 1px solid #26a69a;
+        border-radius: 5px;
+        margin-bottom: 20px;
+    }
+
+    legend {
+        color: #004d40;
+        font-size: 1.2em;
+        font-weight: bold;
+    }
+
+    label {
+        color: #004d40;
+    }
+
+    .form-control {
+        border-radius: 3px;
+    }
+
+    table {
+        margin-top: 10px;
+    }
+
+    th,
+    td {
+        text-align: center;
+    }
+
+    .btn-submit {
+        background-color: #2196F3;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+
+    .btn-submit:hover {
+        background-color: #0b7dda;
+    }
+</style>
+
+<body>
+    <form action="/submit-form-four" id="formFour" method="post">
+        <section>
+            <fieldset>
+                <legend>SECTION A</legend>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="feeder">Feeder:</label>
+                        <input type="text" class="form-control" id="feeder" name="feeder">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="substation">Substation:</label>
+                        <select class="form-control" id="substation" name="substation">
+                            <option value="LUGOGO">Lugogo</option>
+                            <option value="QUEENSWAY">Queen's Way</option>
+                            <option value="KITANTE">Kitante</option>
+                            <option value="KAMPALANORTH">Kampala North</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="toffName">T-OFF Name:</label>
+                        <input type="text" class="form-control" id="toffName" name="toffName">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="mainToffName">Main T-OFF Name:</label>
+                        <input type="text" class="form-control" id="mainToffName" name="mainToffName">
+                    </div>
+                </div>
+            </fieldset>
+        </section>
+
+        <section>
+            <fieldset>
+                <legend>SECTION B</legend>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="location">Location:</label>
+                        <input type="text" class="form-control" id="location" name="location">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="protection">Protection:</label>
+                        <select class="form-control" id="protection" name="protection">
+                            <option value="DIRECT">Direct</option>
+                            <option value="LINKED">Linked</option>
+                            <option value="DOFI">DOFI</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="sizeOfHTFuses">Size of HT Fuses:</label>
+                        <input type="text" class="form-control" id="sizeOfHTFuses" name="sizeOfHTFuses">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="conditionOfToff">Condition of the T-OFF:</label>
+                        <select class="form-control" id="conditionOfToff" name="conditionOfToff">
+                            <option value="OK">OK</option>
+                            <option value="DOFINEEDSREPLACEMENT">DOFI Needs Replacement</option>
+                            <option value="REPAIRNEEDED">Repair Needed</option>
+                            <option value="NEWT-OFFPROTECTION">New T-OFF Protection</option>
+                        </select>
+                    </div>
+                </div>
+            </fieldset>
+        </section>
+
+        <section>
+            <fieldset>
+                <legend>SECTION C</legend>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="operability">Operability:</label>
+                        <select class="form-control" id="operability" name="operability">
+                            <option value="EASY">Easy</option>
+                            <option value="HARD">Hard</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="numOfTx">Number of TXs on T-OFF:</label>
+                        <input type="text" class="form-control" id="numOfTx" name="numOfTx">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="sequenceNumber">Sequence Number:</label>
+                        <input type="text" class="form-control" id="sequenceNumber" name="sequenceNumber">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="maintenanceMaterial">Maintenance Material Required:</label>
+                        <textarea class="form-control" id="maintenanceMaterial" name="maintenanceMaterial"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="gpsX">GPS X-Cordinates:</label>
+                        <input type="text" class="form-control" id="gpsX" name="gpsX">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="gpsY">GPS Y-Cordinates:</label>
+                        <input type="text" class="form-control" id="gpsY" name="gpsY">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="photo1">Photo 1:</label>
+                        <input type="file" class="form-control" id="photo1" name="photo1">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="photo2">Photo 2:</label>
+                        <input type="file" class="form-control" id="photo2" name="photo2">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="photo3">Photo 3:</label>
+                        <input type="file" class="form-control" id="photo3" name="photo3">
+                    </div>
+                </div>
+            </fieldset>
+        </section>
+
+        <section>
+            <fieldset>
+                <legend>SECTION D</legend>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="inspectionDate">Date:</label>
+                        <input type="date" class="form-control" id="inspectionDate" name="inspectionDate">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="cableSize">Cable/Conductor Size:</label>
+                        <select class="form-control" id="cableSize" name="cableSize">
+                            <option value="MAINLINE">Mainline</option>
+                            <option value="TOFF">T-OFF</option>
+                            <option value="ISOLATOR">Isolator</option>
+                            <option value="EXTENSION">Extension</option>
+                        </select>
+                    </div>
+                </div>
+            </fieldset>
+        </section>
+        <button class="btn btn-submit" type="submit">Submit</button>
+    </form>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var myForm = document.getElementById("formFour");
+    
+            myForm.addEventListener("submit", function (event) {
+                event.preventDefault(); // Prevents the default form submission
+    
+                // Create FormData object to handle file uploads
+                var formData = new FormData(myForm);
+    
+                // Submit the form data to the server using Fetch API
+                fetch("/submit-form-four", {
+                    method: "POST",
+                    body: formData, // Use FormData directly, no need to convert to JSON
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            // Server returned an error response
+                            throw new Error(`Server error: ${response.statusText}`);
+                        }
+                        return response.json(); // Assuming the server returns a JSON response
+                    })
+                    .then(data => {
+                        // Handle the success response
+                        alert(data.message); // Use the received message as the alert content
+                        // Optionally, reset the form
+                        myForm.reset();
+                    })
+                    .catch(error => {
+                        // Handle the error
+                        console.error(error); // Log the detailed error to the console
+                        alert("Form submission failed. Please try again."); // You can replace this with a custom pop-up/modal
+                    });
+            });
+        });
+    </script>
+    
+</body>
+</html>

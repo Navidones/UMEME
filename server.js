@@ -2,16 +2,25 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const admin = require('firebase-admin');
+const multer = require('multer');
+
 // const puppeteer = require('puppeteer');
 const puppeteer = require('puppeteer-core');
 const serviceAccount = require('./umeme.json');
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
+  storageBucket: 'gs://umeme-d19d2.appspot.com',
 });
 
 const db = admin.firestore();
+const bucket = admin.storage().bucket();
 const app = express();
 const port = process.env.PORT || 3000;
+
+
+// Configure Multer for file uploads
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.json());
@@ -22,6 +31,22 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res) => {
   res.render('index');
 });
+app.get('/form_two', (req, res) => {
+  res.render('form_two');
+});
+
+app.get('/form_three', (req, res) => {
+  res.render('form_three');
+});
+
+app.get('/form_four', (req, res) => {
+  res.render('form_four');
+});
+
+app.get('/form_five', (req, res) => {
+  res.render('form_five');
+});
+
 
 app.post('/submit-form', async (req, res) => {
   try {
@@ -68,6 +93,84 @@ app.get('/display-data', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
+
+
+// New route for displaying data
+app.get('/display-form-two', async (req, res) => {
+  try {
+    const dataSnapshot = await db.collection('form_two').get();
+    const formDataArray = [];
+
+    dataSnapshot.forEach((doc) => {
+      // Include the document ID along with the form data
+      const formDataWithId = { id: doc.id, ...doc.data() };
+      formDataArray.push(formDataWithId);
+    });
+
+    res.render('display_form_two', { formDataArray });
+  } catch (error) {
+    console.error('Error retrieving data:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+// New route for displaying data
+app.get('/display-form-three', async (req, res) => {
+  try {
+    const dataSnapshot = await db.collection('form_three').get();
+    const formDataArray = [];
+
+    dataSnapshot.forEach((doc) => {
+      // Include the document ID along with the form data
+      const formDataWithId = { id: doc.id, ...doc.data() };
+      formDataArray.push(formDataWithId);
+    });
+
+    res.render('display_form_three', { formDataArray });
+  } catch (error) {
+    console.error('Error retrieving data:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+// New route for displaying data
+app.get('/display-form-four', async (req, res) => {
+  try {
+    const dataSnapshot = await db.collection('form_four').get();
+    const formDataArray = [];
+
+    dataSnapshot.forEach((doc) => {
+      // Include the document ID along with the form data
+      const formDataWithId = { id: doc.id, ...doc.data() };
+      formDataArray.push(formDataWithId);
+    });
+
+    res.render('display_form_four', { formDataArray });
+  } catch (error) {
+    console.error('Error retrieving data:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+// New route for displaying data
+app.get('/display-form-five', async (req, res) => {
+  try {
+    const dataSnapshot = await db.collection('form_five').get();
+    const formDataArray = [];
+
+    dataSnapshot.forEach((doc) => {
+      // Include the document ID along with the form data
+      const formDataWithId = { id: doc.id, ...doc.data() };
+      formDataArray.push(formDataWithId);
+    });
+
+    res.render('display_form_five', { formDataArray });
+  } catch (error) {
+    console.error('Error retrieving data:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 
 // New route for deleting a record
 app.delete('/delete-record/:id', async (req, res) => {
@@ -353,6 +456,165 @@ app.get('/export-pdf/:id', async (req, res) => {
   } catch (error) {
     console.error('Error exporting PDF:', error);
     res.status(500).send('Internal Server Error');
+  }
+});
+
+
+app.post('/submit-form-two', async (req, res) => {
+  try {
+    const formData = req.body;
+
+    // Get the current date and time
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    const day = now.getDate().toString().padStart(2, '0');
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+
+    // Create the document ID using the specified format
+    const docId = `${year}${month}${day}${hours}${minutes}`;
+
+    // Add the form two data to Firestore with the custom document ID
+    const docRef = await db.collection('form_two').doc(docId).set(formData);
+
+    console.log('Form two data added with ID:', docId);
+
+    res.json({ message: 'Form two submitted successfully!' });
+  } catch (error) {
+    console.error('Error submitting form two:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.post('/submit-form-three', async (req, res) => {
+  try {
+    const formData = req.body;
+
+    // Get the current date and time
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    const day = now.getDate().toString().padStart(2, '0');
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+
+    // Create the document ID using the specified format
+    const docId = `${year}${month}${day}${hours}${minutes}`;
+
+    // Add the form two data to Firestore with the custom document ID
+    const docRef = await db.collection('form_three').doc(docId).set(formData);
+
+    console.log('Form two data added with ID:', docId);
+
+    res.json({ message: 'Form two submitted successfully!' });
+  } catch (error) {
+    console.error('Error submitting form two:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
+// Handle form four submission
+app.post('/submit-form-four', upload.fields([
+  { name: 'photo1', maxCount: 1 },
+  { name: 'photo2', maxCount: 1 },
+  { name: 'photo3', maxCount: 1 }
+]), async (req, res) => {
+  try {
+    const bucket = admin.storage().bucket();
+
+    // Get the current date and time
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    const day = now.getDate().toString().padStart(2, '0');
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+
+    // Create the document ID using the specified format
+    const docId = `${year}${month}${day}${hours}${minutes}`;
+
+    // Extract form data and file paths
+    const formData = req.body;
+    const photoPaths = ['photo1', 'photo2', 'photo3'];
+    
+    // Upload images to Firebase Storage and get download URLs
+    const uploadPromises = photoPaths.map(async (photoPath) => {
+      const photo = req.files[photoPath][0];
+      const photoBuffer = photo.buffer;
+      const photoName = photo.originalname;
+
+      const file = bucket.file(`photos/${photoName}`);
+      await file.save(photoBuffer, { contentType: photo.mimetype });
+      const [downloadUrl] = await file.getSignedUrl({ action: 'read', expires: '01-01-2100' });
+
+      // Add image URL to the form data
+      formData[`${photoPath}Url`] = downloadUrl;
+    });
+
+    await Promise.all(uploadPromises);
+
+    // Add the form data to Firestore with the custom document ID
+    const docRef = await db.collection('form_four').doc(docId).set(formData);
+    console.log('Document added with ID:', docRef);
+
+    res.json({ message: 'Form submitted successfully!' });
+  } catch (error) {
+    console.error('Error submitting form:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
+// Handle form five submission
+app.post('/submit-form-five', upload.fields([
+  { name: 'photo1', maxCount: 1 },
+  { name: 'photo2', maxCount: 1 },
+  { name: 'photo3', maxCount: 1 }
+]), async (req, res) => {
+  try {
+    const bucket = admin.storage().bucket();
+
+    // Get the current date and time
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    const day = now.getDate().toString().padStart(2, '0');
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+
+    // Create the document ID using the specified format
+    const docId = `${year}${month}${day}${hours}${minutes}`;
+
+    // Extract form data and file paths
+    const formData = req.body;
+    const photoPaths = ['photo1', 'photo2', 'photo3'];
+    
+    // Upload images to Firebase Storage and get download URLs
+    const uploadPromises = photoPaths.map(async (photoPath) => {
+      const photo = req.files[photoPath][0];
+      const photoBuffer = photo.buffer;
+      const photoName = photo.originalname;
+
+      const file = bucket.file(`photos/${photoName}`);
+      await file.save(photoBuffer, { contentType: photo.mimetype });
+      const [downloadUrl] = await file.getSignedUrl({ action: 'read', expires: '01-01-2100' });
+
+      // Add image URL to the form data
+      formData[`${photoPath}Url`] = downloadUrl;
+    });
+
+    await Promise.all(uploadPromises);
+
+    // Add the form data to Firestore with the custom document ID
+    const docRef = await db.collection('form_five').doc(docId).set(formData);
+    console.log('Document added with ID:', docRef);
+
+    res.json({ message: 'Form submitted successfully!' });
+  } catch (error) {
+    console.error('Error submitting form:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
