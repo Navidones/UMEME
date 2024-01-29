@@ -4,8 +4,10 @@ const path = require('path');
 const admin = require('firebase-admin');
 const multer = require('multer');
 
-// const puppeteer = require('puppeteer');
-const puppeteer = require('puppeteer-core');
+const { PDFDocument, rgb, degrees, grayscale } = require("pdf-lib");
+const { writeFileSync } = require("fs");
+
+
 const serviceAccount = require('./umeme.json');
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -188,268 +190,139 @@ app.delete('/delete-record/:id', async (req, res) => {
 });
 
 // New route for exporting PDF
-
 app.get('/export-pdf/:id', async (req, res) => {
   try {
     const recordId = req.params.id;
-
     const recordRef = await db.collection('form_one').doc(recordId).get();
     const record = { id: recordRef.id, ...recordRef.data() };
 
-    console.log('Retrieved record:', record);
-
     if (record) {
-      const htmlTemplate = `
-      <!DOCTYPE html>
-      <html lang="en">
-      <head>
-          <meta charset="UTF-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>UMEME LIMITED Technical Report</title>
-          <style>
-          @page {
-            size: A4;
-            margin: 20mm 10mm;
-          }
-    
-          body {
-            font-family: 'Arial, sans-serif';
-            margin: 0;
-            padding: 0;
-          }
-    
-          header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 50px;
-            background-color: #3498db;
-            color: white;
-            text-align: center;
-            line-height: 50px;
-          }
-    
-          footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 30px;
-            background-color: #3498db;
-            color: white;
-            text-align: center;
-            line-height: 30px;
-          }
-      
-              section {
-                  margin-bottom: 20px;
-              }
-      
-              h4 {
-                  color: #333;
-              }
-      
-              table {
-                  border-collapse: collapse;
-                  width: 100%;
-                  margin-top: 10px;
-                  border: none;
-              } 
-      
-              th, td {
-                  padding: 10px;
-                  text-align: left;
-              }
-          </style>
-      </head>
-      <body>
-          <p style="text-align: right;">ID: ${record.id}</p>
-      
-          <section>
-              <center><h4><b>UMEME LIMITED</b></h4></center>
-              <table>
-                  <tr>
-                      <th>DISTRICT:</th>
-                      <td>${record.district}</td>
-                      <th>REGION:</th>
-                      <td>KAMPALA CENTRAL</td>
-                  </tr>
-                  <tr>
-                      <th>FROM:</th>
-                      <td>${record.from}</td>
-                      <th>DATE:</th>
-                      <td>${record.reportdate}</td>
-                  </tr>
-                  <tr>
-                      <th>TO:</th>
-                      <td>${record.recipient}</td>
-                      <th>GPS:</th>
-                      <td>X- ${record.gpsx} Y- ${record.gpsy}</td>
-                  </tr>
-                  <tr>
-                      <th>INCIDENCE NO:</th>
-                      <td>${record.incidencenumber}</td>
-                  </tr>
-              </table>
-          </section>
-      
-          <section>
-              
-              <h4><u>SUBJECT: TECHNICAL REPORT ON FAULTY TRANSFORMER</u></h4>
-              <table>
-                  <tr>
-                      <th>FAULT DATE:</th>
-                      <td>${record.faultdate}</td>
-                      <th>LOCATION:</th>
-                      <td>${record.location}</td>
-                  </tr>
-                  <tr>
-                      <th>SUBSTATION NAME:</th>
-                      <td>${record.substationname}</td>
-                      <th>SUBSTATION NUMBER:</th>
-                      <td>${record.substationnumber}</td>
-                  </tr>
-                  <tr>
-                      <th>FEEDER NAME:</th>
-                      <td>${record.feedername}</td>
-                      <th>SOURCE SUBSTATION:</th>
-                      <td>${record.soucesubstation}</td>
-                  </tr>
-              </table>
-          </section>
-      
-          <section>
-              <h4>TRANSFORMER DETAILS</h4>
-              <table>
-                  <tr>
-                      <th>MAKE:</th>
-                      <td>${record.make}</td>
-                      <th>SERIAL NO:</th>
-                      <td>${record.serialno}</td>
-                  </tr>
-                  <tr>
-                      <th>KVA RATING:</th>
-                      <td>${record.kvarating}</td>
-                      <th>VOLTAGE RATING:</th>
-                      <td>${record.voltagerating}</td>
-                  </tr>
-                  <tr>
-                      <th>NUMBER OF PHASES:</th>
-                      <td>${record.numberofphases}</td>
-                      <th>UMEME NO:</th>
-                      <td>${record.umemeno}</td>
-                  </tr>
-                  <tr>
-                      <th>YEAR OF MANUFACTURE:</th>
-                      <td>${record.yearofmanufacture}</td>
-                      <th>DATE INSTALLED:</th>
-                      <td>${record.installationdate}</td>
-                  </tr>
-              </table>
-          </section>
-      
-          <section>
-              <h4>TESTS / OBSERVATIONS CARRIED OUT</h4>
-              <table>
-                  <tr>
-                      <th>WINDING INSULATION:</th>
-                      <td>HV - HV ${record.hvtohv} Ohm | HV - LV ${record.hvtolv} Ohm | LV - E ${record.lvtoe} Ohm | LV - E ${record.hvtoe} Ohm</td>
-                  </tr>
-                  <tr>
-                      <th>SURGE ARRESTORS:</th>
-                      <td>Present/Not Present/Defective/N/A</td>
-                  </tr>
-                  <tr>
-                      <th>CONDITION OF SILICA GEL:</th>
-                      <td>${record.sicalgelcondition}</td>
-                  </tr>
-                  <tr>
-                      <th>EARTHING:</th>
-                      <td>HT: Present/cut/Not Present If Present Value is: <b><u>${record.htearth}</u></b><br>
-                          LV: Present/cut/Not Present If Present Value is: <b><u>${record.lvearth}</u></b></td>
-                  </tr>
-                  <tr>
-                      <th>FUSE RATINGS:</th>
-                      <td>HT: Present/Links/Direct If Present Red: Yellow: Blue: ${record.fuserating}<br>
-                          LV: Present/Links/Direct If Present 
-                          Circuit A: Red: Yellow: ${record.circuita}<br>
-                          Circuit B: Red: Yellow: ${record.yellow}<br>
-                          Circuit C: Red: Yellow: ${record.red}<br>
-                          Circuit D: Red: Yellow: ${record.blue}</td>
-                  </tr>
-                  <tr>
-                      <th>NUMBER OF LV CIRCUITS:</th>
-                      <td>${record.numberoflvcircuits}</td>
-                      
-                  </tr>
-                  <tr>
-                      <th>RADIUS OF LV NETWORK:</th>
-                      <td>${record.radiusoflvnetwork} M</td>
-                  </tr>
-                  </table>
-              </section>
-      
-                  <section>
-                      
-                      <table>
-                          <tr>
-                              <th>GENERAL CONDITION OF TRANSFORMER AND WIRING:</th>
-                      <td>${record.transformercondition}</td>
-                          </tr>
-      
-                           <tr>
-                              <th>Transformer Structure:</th>
-                      <td>${record.transformerstructure}</td>
-                          </tr>
-                  
-                  <tr>
-                      <th>PROBABLE CAUSE OF FAULT:</th>
-                      <td>${record.faultcause}</td>
-                  </tr>
-                  <tr>
-                      <th>REMEDY TO AVOID FUTURE OCCURRENCE:</th>
-                      <td>${record.actiontaken}</td>
-                  </tr> 
-                      </table>
-                  </section>
-      
-              <section>
-                  <table>
-                  <tr>
-                      <th>Report Compiled</th>
-                      <td>By:     ${record.operatorname}</td>
-                  </tr>
-                  <tr>
-                      <th></th>
-                      <td>Sign:   ${record.sign}</td>
-                  </tr>
-                  <tr>
-                      <th></th>
-                      <td>Date:   ${record.operationdate}</td>
-                  </tr>
-              </table>
-          </section>
-      
-      </body>
-      </html>
-      
-      `;
+      const document = await PDFDocument.create();
+      const page = document.addPage([595, 842]); // A4 size in points (1 point = 1/72 inch)
 
-      const browser = await puppeteer.launch({
-        headless: "new",
-        executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
-      });
-      const page = await browser.newPage();
-      await page.setContent(htmlTemplate);
+      // Add content to the PDF using the retrieved record data
+      const { width, height } = page.getSize();
 
-      const pdfBuffer = await page.pdf({ format: 'Letter', printBackground: true });
+      const fontSize = 12;
+      const font = await document.embedFont('Helvetica');
+      const title = "TRANSFORMER TECHNICAL REPORT FORM";
 
-      await browser.close();
+      const drawText = (text, x, y, color = rgb(0, 0, 0)) => {
+        page.drawText(text, {
+          x,
+          y: height - y,
+          size: fontSize,
+          font,
+          color,
+        });
+      };
 
+      const drawLine = (startX, startY, endX, endY) => {
+        const thickness = 1;
+        const color = rgb(0, 0, 0);
+        const opacity = 0.75;
+
+        page.drawLine({
+          start: { x: startX, y: startY },
+          end: { x: endX, y: endY },
+          thickness,
+          color,
+          opacity,
+        });
+      };
+
+      const drawRectangle = (x, y, width, height) => {
+        const borderColor = rgb(0, 0, 0);
+        const borderWidth = 0.5;
+
+        page.drawRectangle({
+          x,
+          y,
+          width,
+          height,
+          borderColor,
+          borderWidth,
+        });
+      };
+
+
+      let startY = 50;
+      drawRectangle(4, 4, 588, 835);
+      drawText(`ID: ${record.id}`, 500, startY);
+      drawText(`${title}`, 160, startY - 30, rgb(0, 1, 0), fontSize + 2);
+
+      drawText(`District: ${record.district}`, 50, startY);
+      drawText(`Region: ${record.region}`, 300, startY);
+
+      drawText(`From: ${record.from}`, 300, startY + 20);
+      drawText(`To: ${record.recipient}`, 50, startY + 20);
+
+      drawText(`Report Date: ${record.reportdate}`, 300, startY + 40);
+      drawText(`GPS: X-${record.gpsx} Y-${record.gpsy}`, 50, startY + 40);
+
+      drawText(`Incidence No: ${record.incidencenumber}`, 300, startY + 60);
+      drawLine(4, 730, 588, 730);
+
+      drawText(`Fault Date: ${record.faultdate}`, 50, startY + 80);
+      drawText(`Location: ${record.location}`, 300, startY + 80);
+      drawText(`Substation Name: ${record.substationname}`, 50, startY + 100);
+      drawText(`Substation Number: ${record.substationnumber}`, 300, startY + 100);
+      drawText(`Feeder Name: ${record.feedername}`, 50, startY + 120);
+      drawText(`Source Substation: ${record.soucesubstation}`, 300, startY + 120);
+      drawLine(4, 665, 588, 665);
+
+      drawText(`Transformer Make: ${record.make}`, 50, startY + 140);
+      drawText(`Transformer Serial No: ${record.serialno}`, 300, startY + 140);
+      drawText(`Transformer KVA Rating: ${record.kvarating}`, 50, startY + 160);
+      drawText(`Transformer Voltage Rating: ${record.voltagerating}`, 300, startY + 160);
+      drawText(`Transformer Number of Phases: ${record.numberofphases}`, 50, startY + 180);
+      drawText(`UMEME No: ${record.umemeno}`, 300, startY + 180);
+      drawText(`Year of Manufacture: ${record.yearofmanufacture}`, 50, startY + 200);
+      drawText(`Date Installed: ${record.installationdate}`, 300, startY + 200);
+      drawLine(4, 588, 590, 590);
+
+      drawText(`Winding Insulation: HV-HV ${record.hvtohv} Ohm | HV-LV ${record.hvtolv} Ohm | LV-E ${record.lvtoe} Ohm | HV-E ${record.hvtoe} Ohm`, 50, startY + 220);
+      drawText(`Surge Arrestors: Present/Not Present/Defective/N/A`, 50, startY + 240);
+      drawText(`Condition of Silica Gel: ${record.sicalgelcondition}`, 50, startY + 260);
+      drawLine(4, 530, 588, 530);
+
+
+      drawText(`Earthing HT: ${record.htearth} LV: ${record.lvearth}`, 50, startY + 320);
+      drawText(`Fuse Ratings: HT: Present/Links/Direct If Present`, 50, startY + 340);
+      drawText(`Red:            12          Yellow:        12         Blue:         ${record.fuserating}`, 50, startY + 360);
+      drawText(`LV: ${record.circuita}    If Present: 5 ohms`, 50, startY + 380);
+
+      drawText(`Circuit A:      Red:  ${record.red}       Yellow:  ${record.yellow}       Blue:    ${record.blue}`, 150, startY + 420);
+      drawText(`Circuit B:      Red:  12       Yellow:  12       Blue:    12`, 150, startY + 440);
+      drawText(`Circuit C:      Red:  12       Yellow:  12       Blue:    12`, 150, startY + 460);
+      drawText(`Circuit D:      Red:  12       Yellow:  12       Blue:    12`, 150, startY + 480);
+      drawRectangle(48, 305, 500, 85);
+
+      drawText(`Number of LV Circuits: ${record.numberoflvcircuits}`, 50, startY + 520);
+      drawText(`Radius of LV Network: ${record.radiusoflvnetwork} M`, 300, startY + 520);
+      drawText(`General Condition of Transformer and Wiring: ${record.transformercondition}`, 50, startY + 565);
+      drawText(`Transformer Structure: ${record.transformerstructure}`, 50, startY + 540);
+      drawText(`Probable Cause of Fault: ${record.faultcause}`, 300, startY + 540);
+
+      drawText(`Remedy to Avoid Future Occurrence:\n ${record.actiontaken}`, 50, startY + 600);
+      drawRectangle(48, 100, 500, 80);
+
+      drawText(`Report Compiled`, 50, startY + 740);
+      drawText(`By:       ${record.operatorname}`, 290, startY + 730);
+      drawLine(320, 60, 488, 60);
+      drawText(`Sign:     ${record.sign}`, 290, startY + 750);
+      drawLine(320, 40, 488, 40);
+      drawText(`Date:     ${record.operationdate}`, 290, startY + 770);
+      drawLine(320, 20, 488, 20);
+
+      // Save the PDF
+      const pdfBytes = await document.save();
+
+      // Send the PDF as a response
       res.setHeader('Content-Disposition', `attachment; filename=record_${recordId}.pdf`);
       res.setHeader('Content-Type', 'application/pdf');
-      res.status(200).send(pdfBuffer);
+      res.end(pdfBytes);
+
     } else {
       res.status(404).send('Record not found');
     }
@@ -458,7 +331,6 @@ app.get('/export-pdf/:id', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
-
 
 app.post('/submit-form-two', async (req, res) => {
   try {
@@ -538,7 +410,7 @@ app.post('/submit-form-four', upload.fields([
     // Extract form data and file paths
     const formData = req.body;
     const photoPaths = ['photo1', 'photo2', 'photo3'];
-    
+
     // Upload images to Firebase Storage and get download URLs
     const uploadPromises = photoPaths.map(async (photoPath) => {
       const photo = req.files[photoPath][0];
@@ -590,7 +462,7 @@ app.post('/submit-form-five', upload.fields([
     // Extract form data and file paths
     const formData = req.body;
     const photoPaths = ['photo1', 'photo2', 'photo3'];
-    
+
     // Upload images to Firebase Storage and get download URLs
     const uploadPromises = photoPaths.map(async (photoPath) => {
       const photo = req.files[photoPath][0];
