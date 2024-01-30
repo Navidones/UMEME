@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Display</title>
+<%- include('partials/header') %>
+    <title>Data Display | Form 4</title>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -42,10 +37,6 @@
             /* Center the image within the cell */
         }
     </style>
-
-</head>
-
-<body>
     <div class="table-container">
         <table id="data-table" class="table table-striped table-bordered">
             <thead>
@@ -169,6 +160,4 @@
             $('#data-table').DataTable();
         });
     </script>
-</body>
-
-</html>
+<%- include('partials/footer') %>

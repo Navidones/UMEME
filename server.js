@@ -205,7 +205,8 @@ app.get('/export-pdf/:id', async (req, res) => {
 
       const fontSize = 12;
       const font = await document.embedFont('Helvetica');
-      const title = "TRANSFORMER TECHNICAL REPORT FORM";
+      const subject = "SUBJECT: TECHNICAL REPORT ON FAULTY TRANSFORMER";
+      const title = "UMEME LIMITED";
 
       const drawText = (text, x, y, color = rgb(0, 0, 0)) => {
         page.drawText(text, {
@@ -248,8 +249,8 @@ app.get('/export-pdf/:id', async (req, res) => {
 
       let startY = 50;
       drawRectangle(4, 4, 588, 835);
-      drawText(`ID: ${record.id}`, 500, startY);
-      drawText(`${title}`, 160, startY - 30, rgb(0, 1, 0), fontSize + 2);
+      drawText(`ID: ${record.id}`, 490, startY-30);
+      drawText(`${title}`, 250, startY - 30, rgb(0, 1, 0), fontSize + 2);
 
       drawText(`District: ${record.district}`, 50, startY);
       drawText(`Region: ${record.region}`, 300, startY);
@@ -257,11 +258,12 @@ app.get('/export-pdf/:id', async (req, res) => {
       drawText(`From: ${record.from}`, 300, startY + 20);
       drawText(`To: ${record.recipient}`, 50, startY + 20);
 
-      drawText(`Report Date: ${record.reportdate}`, 300, startY + 40);
-      drawText(`GPS: X-${record.gpsx} Y-${record.gpsy}`, 50, startY + 40);
+      drawText(`Report Date: ${record.reportdate}`, 250, startY + 40);
+      drawText(`GPS: X:   ${record.gpsx} Y:   ${record.gpsy}`, 50, startY + 40);
 
-      drawText(`Incidence No: ${record.incidencenumber}`, 300, startY + 60);
-      drawLine(4, 730, 588, 730);
+      drawText(`Incidence No: ${record.incidencenumber}`, 400, startY + 40);
+      drawText(`${subject}`, 120, startY + 60, rgb(0, 0, 0), fontSize + 2);
+      drawLine(117, 730, 470, 730);
 
       drawText(`Fault Date: ${record.faultdate}`, 50, startY + 80);
       drawText(`Location: ${record.location}`, 300, startY + 80);
@@ -269,7 +271,7 @@ app.get('/export-pdf/:id', async (req, res) => {
       drawText(`Substation Number: ${record.substationnumber}`, 300, startY + 100);
       drawText(`Feeder Name: ${record.feedername}`, 50, startY + 120);
       drawText(`Source Substation: ${record.soucesubstation}`, 300, startY + 120);
-      drawLine(4, 665, 588, 665);
+      drawLine(50, 665, 538, 665);
 
       drawText(`Transformer Make: ${record.make}`, 50, startY + 140);
       drawText(`Transformer Serial No: ${record.serialno}`, 300, startY + 140);
@@ -279,13 +281,14 @@ app.get('/export-pdf/:id', async (req, res) => {
       drawText(`UMEME No: ${record.umemeno}`, 300, startY + 180);
       drawText(`Year of Manufacture: ${record.yearofmanufacture}`, 50, startY + 200);
       drawText(`Date Installed: ${record.installationdate}`, 300, startY + 200);
-      drawLine(4, 588, 590, 590);
+      drawLine(50, 588, 540, 590);
 
-      drawText(`Winding Insulation: HV-HV ${record.hvtohv} Ohm | HV-LV ${record.hvtolv} Ohm | LV-E ${record.lvtoe} Ohm | HV-E ${record.hvtoe} Ohm`, 50, startY + 220);
-      drawText(`Surge Arrestors: Present/Not Present/Defective/N/A`, 50, startY + 240);
-      drawText(`Condition of Silica Gel: ${record.sicalgelcondition}`, 50, startY + 260);
-      drawLine(4, 530, 588, 530);
-
+      drawText(`TESTS/OBSERVATIONS CARRIED OUT`, 50, startY + 220);
+      drawText(`Winding Insulation:`, 50, startY + 240);
+      drawText(`HV-HV: ${record.hvtohv} Ohm         HV-LV: ${record.hvtolv} Ohm          LV-E: ${record.lvtoe} Ohm          HV-E: ${record.hvtoe} Ohm`, 50, startY + 260);
+      drawText(`Surge Arrestors: Present/Not Present/Defective/N/A`, 50, startY + 280);
+      drawText(`Condition of Silica Gel: ${record.sicalgelcondition}`, 50, startY + 300);
+      drawLine(50, 485, 538, 485);
 
       drawText(`Earthing HT: ${record.htearth} LV: ${record.lvearth}`, 50, startY + 320);
       drawText(`Fuse Ratings: HT: Present/Links/Direct If Present`, 50, startY + 340);
