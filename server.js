@@ -4,7 +4,7 @@ const path = require('path');
 const admin = require('firebase-admin');
 const multer = require('multer');
 const session = require('express-session');
-const cors = require('cors');
+// const cors = require('cors');
 
 const { PDFDocument, rgb } = require("pdf-lib");
 const { writeFileSync } = require("fs");
@@ -46,7 +46,7 @@ app.use(session({
 }));
 
 // Enable CORS with credentials
-app.use(cors({ origin: 'https://lazy-plum-coral-wear.cyclic.app', credentials: true }));
+// app.use(cors({ origin: 'https://lazy-plum-coral-wear.cyclic.app', credentials: true }));
 
 // Middleware to check if user is logged in
 const isLoggedIn = (req, res, next) => {
