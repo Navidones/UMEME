@@ -4,10 +4,10 @@ const path = require('path');
 const admin = require('firebase-admin');
 const multer = require('multer');
 const session = require('express-session');
+const cors = require('cors');
 
-const { PDFDocument, rgb, degrees, grayscale } = require("pdf-lib");
+const { PDFDocument, rgb } = require("pdf-lib");
 const { writeFileSync } = require("fs");
-
 
 const serviceAccount = require('./umeme.json');
 admin.initializeApp({
@@ -18,12 +18,11 @@ admin.initializeApp({
 const db = admin.firestore();
 const bucket = admin.storage().bucket();
 const app = express();
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 3000;
 
 // Configure Multer for file uploads
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
-
 
 // Apply session middleware to make req.session available throughout the application
 app.set("trust proxy", 1);
@@ -32,20 +31,22 @@ sameSite: "none"
 
 app.set("trust proxy", 1); // trust first proxy
 
-app.use(
-  session({
-    secret: 'fbndfvu4i3u49vnlbn929JPMC3489FP93GH',
-    resave: false,
-    saveUninitialized: true,
-    proxy: true, // Required for Heroku & Digital Ocean (regarding X-Forwarded-For)
-    name: 'MrPaulServiceCookie', // This needs to be unique per-host.
-    cookie: {
-      secure: true, // required for cookies to work on HTTPS
-      httpOnly: false,
-      sameSite: 'none'
-    }
-  })
-);
+// Apply session middleware
+app.use(session({
+  secret: 'fbndfvu4i3u49vnlbn929JPMC3489FP93GH',
+  resave: false,
+  saveUninitialized: true,
+  proxy: true, // Required for Heroku & Digital Ocean (regarding X-Forwarded-For)
+  name: 'MyCoolWebAppCookieName', // This needs to be unique per-host.
+  cookie: {
+    secure: true, // required for cookies to work on HTTPS
+    httpOnly: true, // recommended for session cookies
+    sameSite: 'none' // required for cross-site cookies
+  }
+}));
+
+// Enable CORS with credentials
+app.use(cors({ origin: 'https://lazy-plum-coral-wear.cyclic.app', credentials: true }));
 
 // Middleware to check if user is logged in
 const isLoggedIn = (req, res, next) => {
@@ -320,7 +321,7 @@ app.get('/export-pdf/:id', async (req, res) => {
 
       let startY = 50;
       drawRectangle(4, 4, 588, 835);
-      drawText(`ID: ${record.id}`, 490, startY-30);
+      drawText(`ID: ${record.id}`, 490, startY - 30);
       drawText(`${title}`, 250, startY - 30, rgb(0, 1, 0), fontSize + 2);
 
       drawText(`District: ${record.district}`, 50, startY);
