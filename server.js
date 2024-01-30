@@ -24,17 +24,20 @@ const port = process.env.PORT || 3000;
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
+
+// Apply session middleware to make req.session available throughout the application
 app.use(session({
   secret: 'fbndfvu4i3u49vnlbn929JPMC3489FP93GH',
   resave: false,
   saveUninitialized: true
 }));
 
+// Middleware to check if user is logged in
 const isLoggedIn = (req, res, next) => {
   if (req.session.user) {
-    next();
+    next(); // User is authenticated, proceed to next middleware
   } else {
-    res.redirect('/');
+    res.redirect('/'); // Redirect to login if not authenticated
   }
 };
 
@@ -43,6 +46,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+// Routes requiring authentication
 app.get('/', (req, res) => {
   if (req.session.user) {
     res.redirect('/form_one');
@@ -76,25 +81,27 @@ app.post('/login', (req, res) => {
     });
 });
 
+// Apply the isLoggedIn middleware to all routes requiring authentication
+app.use(isLoggedIn);
 
-// Routes requiring authentication
-app.get('/form_one', isLoggedIn, (req, res) => {
+// Define other routes...
+app.get('/form_one', (req, res) => {
   res.render('form_one');
 });
 
-app.get('/form_two', isLoggedIn, (req, res) => {
+app.get('/form_two', (req, res) => {
   res.render('form_two');
 });
 
-app.get('/form_three', isLoggedIn, (req, res) => {
+app.get('/form_three', (req, res) => {
   res.render('form_three');
 });
 
-app.get('/form_four', isLoggedIn, (req, res) => {
+app.get('/form_four', (req, res) => {
   res.render('form_four');
 });
 
-app.get('/form_five', isLoggedIn, (req, res) => {
+app.get('/form_five', (req, res) => {
   res.render('form_five');
 });
 
@@ -127,7 +134,7 @@ app.post('/submit-form', async (req, res) => {
 });
 
 // New route for displaying data
-app.get('/display-data', isLoggedIn, async (req, res) => {
+app.get('/display-data', async (req, res) => {
   try {
     const dataSnapshot = await db.collection('form_one').get();
     const formDataArray = [];
@@ -147,7 +154,7 @@ app.get('/display-data', isLoggedIn, async (req, res) => {
 
 
 // New route for displaying data
-app.get('/display-form-two', isLoggedIn, async (req, res) => {
+app.get('/display-form-two', async (req, res) => {
   try {
     const dataSnapshot = await db.collection('form_two').get();
     const formDataArray = [];
@@ -166,7 +173,7 @@ app.get('/display-form-two', isLoggedIn, async (req, res) => {
 });
 
 // New route for displaying data
-app.get('/display-form-three', isLoggedIn, async (req, res) => {
+app.get('/display-form-three', async (req, res) => {
   try {
     const dataSnapshot = await db.collection('form_three').get();
     const formDataArray = [];
@@ -185,7 +192,7 @@ app.get('/display-form-three', isLoggedIn, async (req, res) => {
 });
 
 // New route for displaying data
-app.get('/display-form-four', isLoggedIn, async (req, res) => {
+app.get('/display-form-four', async (req, res) => {
   try {
     const dataSnapshot = await db.collection('form_four').get();
     const formDataArray = [];
@@ -204,7 +211,7 @@ app.get('/display-form-four', isLoggedIn, async (req, res) => {
 });
 
 // New route for displaying data
-app.get('/display-form-five', isLoggedIn, async (req, res) => {
+app.get('/display-form-five', async (req, res) => {
   try {
     const dataSnapshot = await db.collection('form_five').get();
     const formDataArray = [];
