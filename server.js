@@ -34,7 +34,7 @@ app.set("trust proxy", 1); // trust first proxy
 // Apply session middleware
 app.use(session({
   secret: 'fbndfvu4i3u49vnlbn929JPMC3489FP93GH',
-  resave: false,
+  resave: true,
   saveUninitialized: true,
   proxy: true, // Required for Heroku & Digital Ocean (regarding X-Forwarded-For)
   name: 'MyCoolWebAppCookieName', // This needs to be unique per-host.
