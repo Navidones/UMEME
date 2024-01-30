@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const admin = require('firebase-admin');
 const multer = require('multer');
+const session = require('express-session');
 
 const { PDFDocument, rgb, degrees, grayscale } = require("pdf-lib");
 const { writeFileSync } = require("fs");
@@ -19,33 +20,81 @@ const bucket = admin.storage().bucket();
 const app = express();
 const port = process.env.PORT || 3000;
 
-
 // Configure Multer for file uploads
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
+app.use(session({
+  secret: 'fbndfvu4i3u49vnlbn929JPMC3489FP93GH',
+  resave: false,
+  saveUninitialized: true
+}));
+
+const isLoggedIn = (req, res, next) => {
+  if (req.session.user) {
+    next();
+  } else {
+    res.redirect('/');
+  }
+};
+
 app.set('view engine', 'ejs');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
-  res.render('index');
+  if (req.session.user) {
+    res.redirect('/form_one');
+  } else {
+    res.render('index');
+  }
 });
-app.get('/form_two', (req, res) => {
+
+app.post('/login', (req, res) => {
+  const { username, password } = req.body;
+
+  // Query Firestore to check if the credentials are valid
+  const usersRef = db.collection('users').doc('20240130');
+  usersRef.get()
+    .then(doc => {
+      if (!doc.exists) {
+        res.status(401).send('Invalid credentials');
+      } else {
+        const userData = doc.data();
+        if (userData.username === username && userData.password === password) {
+          req.session.user = username; // Start session
+          res.redirect('/form_one'); // Redirect to dashboard after successful login
+        } else {
+          res.status(401).send('Invalid credentials');
+        }
+      }
+    })
+    .catch(error => {
+      console.error('Error querying Firestore:', error);
+      res.status(500).send('Internal server error');
+    });
+});
+
+
+// Routes requiring authentication
+app.get('/form_one', isLoggedIn, (req, res) => {
+  res.render('form_one');
+});
+
+app.get('/form_two', isLoggedIn, (req, res) => {
   res.render('form_two');
 });
 
-app.get('/form_three', (req, res) => {
+app.get('/form_three', isLoggedIn, (req, res) => {
   res.render('form_three');
 });
 
-app.get('/form_four', (req, res) => {
+app.get('/form_four', isLoggedIn, (req, res) => {
   res.render('form_four');
 });
 
-app.get('/form_five', (req, res) => {
+app.get('/form_five', isLoggedIn, (req, res) => {
   res.render('form_five');
 });
 
@@ -78,7 +127,7 @@ app.post('/submit-form', async (req, res) => {
 });
 
 // New route for displaying data
-app.get('/display-data', async (req, res) => {
+app.get('/display-data', isLoggedIn, async (req, res) => {
   try {
     const dataSnapshot = await db.collection('form_one').get();
     const formDataArray = [];
@@ -98,7 +147,7 @@ app.get('/display-data', async (req, res) => {
 
 
 // New route for displaying data
-app.get('/display-form-two', async (req, res) => {
+app.get('/display-form-two', isLoggedIn, async (req, res) => {
   try {
     const dataSnapshot = await db.collection('form_two').get();
     const formDataArray = [];
@@ -117,7 +166,7 @@ app.get('/display-form-two', async (req, res) => {
 });
 
 // New route for displaying data
-app.get('/display-form-three', async (req, res) => {
+app.get('/display-form-three', isLoggedIn, async (req, res) => {
   try {
     const dataSnapshot = await db.collection('form_three').get();
     const formDataArray = [];
@@ -136,7 +185,7 @@ app.get('/display-form-three', async (req, res) => {
 });
 
 // New route for displaying data
-app.get('/display-form-four', async (req, res) => {
+app.get('/display-form-four', isLoggedIn, async (req, res) => {
   try {
     const dataSnapshot = await db.collection('form_four').get();
     const formDataArray = [];
@@ -155,7 +204,7 @@ app.get('/display-form-four', async (req, res) => {
 });
 
 // New route for displaying data
-app.get('/display-form-five', async (req, res) => {
+app.get('/display-form-five', isLoggedIn, async (req, res) => {
   try {
     const dataSnapshot = await db.collection('form_five').get();
     const formDataArray = [];
@@ -493,6 +542,19 @@ app.post('/submit-form-five', upload.fields([
   }
 });
 
+// Logout route
+app.post('/logout', (req, res) => {
+  // Destroy the session
+  req.session.destroy((err) => {
+    if (err) {
+      console.error('Error destroying session:', err);
+      res.status(500).send('Internal Server Error');
+    } else {
+      // Redirect the user to the login page
+      res.redirect('/');
+    }
+  });
+});
 
 app.listen(port, '0.0.0.0', () => {
   console.log(`Server is running at http://localhost:${port}`);

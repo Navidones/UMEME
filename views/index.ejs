@@ -1,283 +1,105 @@
-<%- include('partials/header', { title: 'FORM ONE' }) %>
-    <!-- bootstrap css -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggoyr0ixcbmqv3xipma34md+dh/1fq784/j6cy/ijtquohcwr7x9jvorxt2mzw1t" crossorigin="anonymous">
-    <link rel="stylesheet" href="./css/styles.css">
-    <title>Form One</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f3f3;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 400px;
+            margin: 100px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #4CAF50;
+            text-align: center;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            width: 100%;
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: #4CAF50;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome Mr. Paul!</h1>
+        <form action="/login" method="POST">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required><br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required><br>
+            <input type="submit" value="Login">
+        </form>
+    </div>
+    <div class="footer">
+        Developed by UgProjectHub | Contact: +256760692194 | Email: ugprojecthub@gmail.com
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#loginForm').submit(function(event) {
+                event.preventDefault();
+                var formData = {
+                    username: $('#username').val(),
+                    password: $('#password').val()
+                };
 
-    <form id="myForm" class="container mt-4" method="post">
-        <!-- <form id="myForm" class="container mt-4" action="/submit-form" method="post"> -->
-        <h1>transformer technical report form</h1>
-        <fieldset>
-            <legend>
-                <h3>umeme limited</h3>
-            </legend>
-            <label for="district">district:</label>
-            <input type="text" id="district" name="district" required><br><br>
-            <label for="region">region:</label>
-            <input type="text" id="region" name="region" required><br><br>
-            <label for="name">from:</label>
-            <input type="text" name="from" required><br><br>
-            <label for="recipient">to:</label>
-            <input type="text" id="recipient" name="recipient" required><br><br>
-            <label for="reportdate">date:</label>
-            <input type="date" id="reportdate" name="reportdate" required><br><br>
-            <p>
-            <h4>gps:</h4>
-            <label for="gpsx">x:</label>
-            <input type="text" id="gpsx" name="gpsx" required><br><br>
-            <label for="gpsy">y:</label>
-            <input type="text" id="gpsy" name="gpsy" required><br><br>
-            </p>
-            <label for="incidencenumber">incidence no.:</label>
-            <input type="text" id="incidencenumber" name="incidencenumber" required><br><br>
-        </fieldset>
-
-          
-        <fieldset>
-            <legend>
-                <h3>subject:technical report on faulty transformer </h3>
-            </legend>
-            <label for="faultdate">fault date:</label>
-            <input type="date" id="faultdate" name="faultdate" required></input><br><br>
-            <label for="location">location:</label>
-            <input type="text" id="location" name="location" required><br><br>
-            <label for="substationname">substation name:</label>
-            <input type="text" id="substationname" name="substationname" required><br><br>
-            <label for="substationnumber">substation no.:</label>
-            <input type="text" id="substationnumber" name="substationnumber" required><br><br>
-            <label for="feedername">feeder name:</label>
-            <input type="text" id="feedername" name="feedername" required>
-            <br><br>
-            <label for="soucesubstation">source substation:</label>
-            <input type="text" id="soucesubstation" name="soucesubstation" required><br><br>
-        </fieldset>
-
-        <fieldset>
-            <legend>
-                <h3>transformer details:</h3>
-            </legend>
-            <label for="make">make:</label>
-            <input type="text" id="make" name="make" required><br><br>
-            <label for="serialno">serial no.:</label>
-            <input type="text" id="serialno" name="serialno" required><br><br>
-            <label for="kvarating">kva rating:</label>
-            <input type="text" id="kvarating" name="kvarating" required><br><br>
-            <label for="voltagerating">voltage rating:</label>
-            <input type="text" id="voltagerating" name="voltagerating" required><br><br>
-            <label for="numberofphases">no. of phases:</label>
-            <input type="text" id="numberofphases" name="numberofphases" required><br><br>
-            <label for="umemeno">umeme no.:</label>
-            <input type="text" id="umemeno" name="umemeno" required><br><br>
-            <label for="yearofmanufacture">year of manufacture:</label>
-            <input type="text" id="yearofmanufacture" name="yearofmanufacture" required><br><br>
-            <label for="installationdate">date installed:</label>
-            <input type="date" id="installationdate" name="installationdate"></input><br><br>
-        </fieldset>
-
-        <fieldset>
-            <legend>
-                <h3>tests/ observations carried out</h3>
-            </legend>
-
-            <h3>winding insulation:</h3>
-            <label for="hvtohv">hv-hv:</label>
-            <input type="text" id="hvtohv" name="hvtohv" required>ohm<br><br>
-            <label for="hvtolv">hv-lv:</label>
-            <input type="text" id="hvtolv" name="hvtolv" required>ohm<br><br>
-            <label for="lvtoe">lv-e:</label>
-            <input type="text" name="lvtoe" required>ohm<br><br>
-            <label for="hvtoe">hv-e:</label>
-            <input type="text" id="hvtoe" name="hvtoe" required>ohm<br><br>
-
-            <h3>surge arrestors:</h3>
-            <p>present/not or present/defective if present insulation resistances are:</p>
-            <br>
-            <label for="red">red:</label>
-            <input type="text" id="red" name="red" required>ohm<br><br>
-            <label for="yellow">yellow:</label>
-            <input type="text" id="yellow" name="yellow" required>ohm<br><br>
-            <label for="blue">blue:</label>
-            <input type="text" id="blue" name="blue" required>ohm<br><br>
-
-            <h3>condition of silica gel if applicable</h3>
-            <label for="sicalgelcondition">silica gel:</label>
-            <input type="text" id="sicalgelcondition" name="sicalgelcondition">
-
-            <h4>earthing:</h4>
-            <p>
-                ht: cut/not present if present value is:
-            </p><br>
-            <label for="htearth">ht earth:</label>
-            <select id="htearth" name="htearth" required>
-                <option value="Present">Present</option>
-                <option value="Cut">Cut</option>
-                <option value="Not Present">Not Present</option>
-            </select>
-            ohm<br><br>
-            <p>
-                lv: cut/not present if present value is:
-            </p><br>
-            <label for="lvearth">lv earth:</label>
-            <select id="lvearth" name="lvearth" required>
-                <option value="Present">Present</option>
-                <option value="Cut">Cut</option>
-                <option value="Not Present">Not Present</option>
-            </select>
-            ohm<br><br>
-
-            <h3>fuse rating ht:</h3>
-
-            <label for="fuserating">red:</label>
-            <select id="fuserating" name="fuserating" required>
-                <option value="Present">Present</option>
-                <option value="Link">Link</option>
-                <option value="Direct">Direct</option>
-            </select>
-            <label for="">choose: (if present specify color)</label>
-            <select id="fuserating" name="fuserating" required>
-                <option value="N/A">N/A</option>
-                <option value="Red">Red</option>
-                <option value="Yellow">Yellow</option>
-                <option value="Blue">Blue</option>
-            </select>
-               
-            <h3>fuse rating lv:</h3>
-            <label for="circuita">circuit a</label>
-            <select id="circuita" name="circuita" required>
-                <option value="Present">Present</option>
-                <option value="Link">Link</option>
-                <option value="Direct">Direct</option>
-            </select>
-            <label for="">choose: (if present specify color)</label>
-            <select id="fuserating" name="fuserating" required>
-                <option value="N/A">N/A</option>
-                <option value="Red">Red</option>
-                <option value="Yellow">Yellow</option>
-                <option value="Blue">Blue</option>
-            </select>
-
-            <label for="circuita">circuit b</label>
-            <select id="circuita" name="circuita" required>
-                <option value="Present">Present</option>
-                <option value="Link">Link</option>
-                <option value="Direct">Direct</option>
-            </select>
-            <label for="">choose: (if present specify color)</label>
-            <select id="fuserating" name="fuserating" required>
-                <option value="N/A">N/A</option>
-                <option value="Red">Red</option>
-                <option value="Yellow">Yellow</option>
-                <option value="Blue">Blue</option>
-            </select>
-
-            <label for="circuita">circuit c</label>
-            <select id="circuita" name="circuita" required>
-                <option value="Present">Present</option>
-                <option value="Link">Link</option>
-                <option value="Direct">Direct</option>
-            </select>
-            <label for="">choose: (if present specify color)</label>
-            <select id="fuserating" name="fuserating">
-                <option value="N/A">N/A</option>
-                <option value="Red">Red</option>
-                <option value="Yellow">Yellow</option>
-                <option value="Blue">Blue</option>
-            </select>
-
-            <label for="circuita">circuit d</label>
-            <select id="circuita" name="circuita">
-                <option value="Present">Present</option>
-                <option value="Link">Link</option>
-                <option value="Direct">Direct</option>
-            </select>
-            <label for="">choose: (if present specify color)</label>
-            <select id="fuserating" name="fuserating">
-                <option value="N/A">N/A</option>
-                <option value="Red">Red</option>
-                <option value="Yellow">Yellow</option>
-                <option value="Blue">Blue</option>
-            </select>
-
-            <label for="numberoflvcircuits">number of lv circuits</label>
-            <select id="numberoflvcircuits" name="numberoflvcircuits" required>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>
-
-            <label for="radiusoflvnetwork">radius of lv network</label>
-            <input type="number" name="radiusoflvnetwork" id="radiusoflvnetwork" required>metres
-
-             <h3>general condition of transformer and wiring:</h3>  
-
-            <label for="transformercondition">transformer:</label>
-            <select id="transformercondition" name="transformercondition" required>
-                <option value="OK">ok</option>
-                <option value="OIL SPILLED">Oil spilled</option>
-                <option value="OIL LEAKAGE">Oil leakage</option>
-                <option value="DAMAGED">Damaged</option>
-                <option value="BUSH BURNINGS">Bush Burnt</option>
-            </select> 
-
-            </select>
-            <label for="transformerstructure">structure:</label>
-            <select id="transformerstructure" name="transformerstructure" required>
-                <option value="OK">Ok</option>
-                <option value="LEANIGN">Leaning</option>
-                <option value="POLE ROTTEN">Pole Rotten</option>
-                <option value="POLE BROKEN">Pole Broken</option>
-            </select>
-
-            </select>
-            <label for="transfomerwiring">transformer wiring:</label>
-            <select id="transfomerwiring" name="transfomerwiring" required>
-                <option value="ok">ok</option>
-                <option value="some burnt">some burnt</option>
-                <option value="totally burnt">totally burnt</option>
-            </select>
-
-            <label for="faultcause">probable cause of the fault:</label>
-            <select id="faultcause" name="faultcause" required>
-                <option value="overload">Overload</option>
-                <option value="short circuit">Short Circuit</option>
-                <option value="lightening">Lightening</option>
-                <option value="oil spitting">Oil spitting</option>
-                <option value="insulation failure">Insulation Failure</option>
-                <option value="structure damage">Structure Damage</option>
-                <option value="other">Other</option>
-            </select>
-
-            <label for="actiontaken">remedy to avoid future occurence:</label>
-            <textarea name="actiontaken" required></textarea><br><br>
-        </fieldset>
-
-        <fieldset>
-            <legend>
-                <h3>report compiled by</h3>
-            </legend>
-            <label for="operatorname">by:</label>
-            <input type="text" id="operatorname" name="operatorname" required><br><br>
-            <label for="sign">sign:</label>
-            <input type="text" id="sign" name="sign" required><br><br>
-            <label for="operationdate">date:</label>
-            <input type="date" id="operationdate" name="operationdate" required></input><br><br>
-        </fieldset>
-        <input type="submit" value="submit">
-    </form>
-
-    <script src="./js/script.js"></script>
-    <!-- bootstrap js and dependencies (placed at the end of the body for faster page loading) -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/x+965dzo0rt7abk41jstqiaqvgrvzpbzo5smxkp4yfrvh+8abtte1pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-uo2et0cphqdsjq6hjty5kvphtphzwj9wo1clhtmga3jdzwrnqq4sf86dihndz0w1"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-jjsmvgyd0p3pxb1rribzuayoiiy6orq6vrjieaff/njgzixfdsf4x0xim+b07jrm"
-        crossorigin="anonymous"></script>
-
-    <%- include('partials/footer') %>
+                $.ajax({
+                    type: 'POST',
+                    url: '/login',
+                    data: formData,
+                    success: function(response) {
+                        // Handle successful login response
+                        console.log(response);
+                        // Redirect or perform other actions
+                    },
+                    error: function(error) {
+                        // Handle error response
+                        console.error('Error:', error);
+                    }
+                });
+            });
+        });
+    </script>
+    
+</body>
+</html>
