@@ -26,11 +26,26 @@ const upload = multer({ storage: storage });
 
 
 // Apply session middleware to make req.session available throughout the application
-app.use(session({
-  secret: 'fbndfvu4i3u49vnlbn929JPMC3489FP93GH',
-  resave: false,
-  saveUninitialized: true
-}));
+app.set("trust proxy", 1);
+
+sameSite: "none"
+
+app.set("trust proxy", 1); // trust first proxy
+
+app.use(
+  session({
+    secret: 'fbndfvu4i3u49vnlbn929JPMC3489FP93GH',
+    resave: false,
+    saveUninitialized: true,
+    proxy: true, // Required for Heroku & Digital Ocean (regarding X-Forwarded-For)
+    name: 'MrPaulServiceCookie', // This needs to be unique per-host.
+    cookie: {
+      secure: true, // required for cookies to work on HTTPS
+      httpOnly: false,
+      sameSite: 'none'
+    }
+  })
+);
 
 // Middleware to check if user is logged in
 const isLoggedIn = (req, res, next) => {
