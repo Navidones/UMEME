@@ -62,7 +62,7 @@
 <body>
     <div class="container">
         <h1>Welcome Mr. Paul!</h1>
-        <form action="/login" method="POST">
+        <form id="loginForm">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required><br>
             <label for="password">Password:</label>
@@ -90,6 +90,7 @@
                     success: function(response) {
                         // Handle successful login response
                         console.log(response);
+                        window.location.href = '/form_one';
                         // Redirect or perform other actions
                     },
                     error: function(error) {
@@ -100,6 +101,5 @@
             });
         });
     </script>
-    
 </body>
 </html>

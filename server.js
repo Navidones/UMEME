@@ -24,27 +24,16 @@ const port = process.env.PORT || 8000;
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-// Apply session middleware to make req.session available throughout the application
-app.set("trust proxy", 1);
+// app.set("trust proxy", 1); 
 
-sameSite: "none"
-
-app.set("trust proxy", 1); // trust first proxy
-
-// Apply session middleware
 app.use(session({
-  secret: 'fbndfvu4i3u49vnlbn929JPMC3489FP93GH',
+  secret: 'dfjfdjkt9ermc8349pe8tcymq8ocnt7', // Change this to a random string
   resave: false,
-  saveUninitialized: true,
-  proxy: true, 
-  name: 'MyCoolWebAppCookieName', // This needs to be unique per-host.
-  cookie: {
-    secure: true, // required for cookies to work on HTTPS
-    httpOnly: true, // recommended for session cookies
-    sameSite: 'none' // required for cross-site cookies
-  }
+  saveUninitialized: false,
+  store: new FirebaseStore({
+      database: admin.database()
+  })
 }));
-
 // Enable CORS with credentials
 // app.use(cors({ origin: 'https://lazy-plum-coral-wear.cyclic.app', credentials: true }));
 
@@ -85,7 +74,8 @@ app.post('/login', (req, res) => {
         const userData = doc.data();
         if (userData.username === username && userData.password === password) {
           req.session.user = username; // Start session
-          res.redirect('/form_one'); // Redirect to dashboard after successful login
+          // res.redirect('/form_one'); // Redirect to dashboard after successful login
+          res.json({ message: 'Form submitted successfully!' });
         } else {
           res.status(401).send('Invalid credentials');
         }
