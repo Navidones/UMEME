@@ -4,7 +4,8 @@ const path = require('path');
 const admin = require('firebase-admin');
 const multer = require('multer');
 const session = require('express-session');
-// const cors = require('cors');
+const cors = require('cors');
+const {Firestore} = require('@google-cloud/firestore');
 
 const { PDFDocument, rgb } = require("pdf-lib");
 const { writeFileSync } = require("fs");
@@ -26,14 +27,17 @@ const upload = multer({ storage: storage });
 
 app.set("trust proxy", 1); 
 
-app.use(session({
-  secret: 'dfjfdjkt9ermc8349pe8tcymq8ocnt7', // Change this to a random string
-  resave: false,
-  saveUninitialized: false,
-  store: new FirebaseStore({
-      database: admin.database()
+app.use(
+  session({
+    store: new FirestoreStore({
+      dataset: new Firestore(),
+      kind: 'express-sessions',
+    }),
+    secret: 'rtbneig39849v8f493f8jf',
+    resave: false,
+    saveUninitialized: true,
   })
-}));
+);
 // Enable CORS with credentials
 app.use(cors({ origin: 'https://magenta-pig-hem.cyclic.app/', credentials: true }));
 
