@@ -24,7 +24,7 @@ const port = process.env.PORT || 8000;
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-// app.set("trust proxy", 1); 
+app.set("trust proxy", 1); 
 
 app.use(session({
   secret: 'dfjfdjkt9ermc8349pe8tcymq8ocnt7', // Change this to a random string
@@ -35,7 +35,7 @@ app.use(session({
   })
 }));
 // Enable CORS with credentials
-// app.use(cors({ origin: 'https://lazy-plum-coral-wear.cyclic.app', credentials: true }));
+app.use(cors({ origin: 'https://magenta-pig-hem.cyclic.app/', credentials: true }));
 
 // Middleware to check if user is logged in
 const isLoggedIn = (req, res, next) => {
