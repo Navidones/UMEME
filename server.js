@@ -121,34 +121,6 @@ app.get('/form_five', (req, res) => {
   res.render('form_five');
 });
 
-
-app.post('/submit-form', async (req, res) => {
-  try {
-    const formData = req.body;
-
-    // Get the current date and time
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = (now.getMonth() + 1).toString().padStart(2, '0');
-    const day = now.getDate().toString().padStart(2, '0');
-    const hours = now.getHours().toString().padStart(2, '0');
-    const minutes = now.getMinutes().toString().padStart(2, '0');
-
-    // Create the document ID using the specified format
-    const docId = `${year}${month}${day}${hours}${minutes}`;
-
-    // Add the form data to Firestore with the custom document ID
-    const docRef = await db.collection('form_one').doc(docId).set(formData);
-
-    console.log('Document added with ID:', docId);
-
-    res.json({ message: 'Form submitted successfully!' });
-  } catch (error) {
-    console.error('Error submitting form:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
-
 // New route for displaying data
 app.get('/display-data', async (req, res) => {
   try {
@@ -367,10 +339,10 @@ app.get('/export-pdf/:id', async (req, res) => {
       drawText(`Red:            12          Yellow:        12         Blue:         ${record.fuserating}`, 50, startY + 360);
       drawText(`LV: ${record.circuita}    If Present: 5 ohms`, 50, startY + 380);
 
-      drawText(`Circuit A:      Red:  ${record.red}       Yellow:  ${record.yellow}       Blue:    ${record.blue}`, 150, startY + 420);
-      drawText(`Circuit B:      Red:  12       Yellow:  12       Blue:    12`, 150, startY + 440);
-      drawText(`Circuit C:      Red:  12       Yellow:  12       Blue:    12`, 150, startY + 460);
-      drawText(`Circuit D:      Red:  12       Yellow:  12       Blue:    12`, 150, startY + 480);
+      drawText(`Circuit A:      Red:  ${record.red}A       Yellow:  ${record.yellow}A       Blue:    ${record.blue}A`, 150, startY + 420);
+      drawText(`Circuit B:      Red:  12A       Yellow:  12A       Blue:    12A`, 150, startY + 440);
+      drawText(`Circuit C:      Red:  12A       Yellow:  12A       Blue:    12A`, 150, startY + 460);
+      drawText(`Circuit D:      Red:  12A       Yellow:  12A       Blue:    12A`, 150, startY + 480);
       drawRectangle(48, 305, 500, 85);
 
       drawText(`Number of LV Circuits: ${record.numberoflvcircuits}`, 50, startY + 520);
@@ -406,6 +378,7 @@ app.get('/export-pdf/:id', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
+
 
 app.post('/submit-form-two', async (req, res) => {
   try {
