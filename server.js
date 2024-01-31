@@ -36,7 +36,7 @@ app.use(session({
   secret: 'fbndfvu4i3u49vnlbn929JPMC3489FP93GH',
   resave: false,
   saveUninitialized: true,
-  proxy: true, // Required for Heroku & Digital Ocean (regarding X-Forwarded-For)
+  proxy: true, 
   name: 'MyCoolWebAppCookieName', // This needs to be unique per-host.
   cookie: {
     secure: true, // required for cookies to work on HTTPS
@@ -49,13 +49,13 @@ app.use(session({
 // app.use(cors({ origin: 'https://lazy-plum-coral-wear.cyclic.app', credentials: true }));
 
 // Middleware to check if user is logged in
-// const isLoggedIn = (req, res, next) => {
-//   if (req.session.user) {
-//     next(); // User is authenticated, proceed to next middleware
-//   } else {
-//     res.redirect('/'); // Redirect to login if not authenticated
-//   }
-// };
+const isLoggedIn = (req, res, next) => {
+  if (req.session.user) {
+    next(); // User is authenticated, proceed to next middleware
+  } else {
+    res.redirect('/'); // Redirect to login if not authenticated
+  }
+};
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.json());
@@ -98,9 +98,8 @@ app.post('/login', (req, res) => {
 });
 
 // Apply the isLoggedIn middleware to all routes requiring authentication
-// app.use(isLoggedIn);
+app.use(isLoggedIn);
 
-// Define other routes...
 app.get('/form_one', (req, res) => {
   res.render('form_one');
 });
