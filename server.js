@@ -4,8 +4,8 @@ const path = require('path');
 const admin = require('firebase-admin');
 const multer = require('multer');
 const session = require('express-session');
-const cors = require('cors');
-const {Firestore} = require('@google-cloud/firestore');
+const cookieParser = require("cookie-parser");
+const http = require('http');
 
 const { PDFDocument, rgb } = require("pdf-lib");
 const { writeFileSync } = require("fs");
@@ -25,22 +25,17 @@ const port = process.env.PORT || 8000;
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-app.set("trust proxy", 1); 
+app.set("trust proxy", 1); // trust first proxy
 
-app.use(
-  session({
-    store: new FirestoreStore({
-      dataset: new Firestore(),
-      kind: 'express-sessions',
-    }),
-    secret: 'rtbneig39849v8f493f8jf',
-    resave: false,
-    saveUninitialized: true,
-  })
-);
-// Enable CORS with credentials
-app.use(cors({ origin: 'https://magenta-pig-hem.cyclic.app/', credentials: true }));
+const oneDay = 1000 * 60 * 60 * 24;
+app.use(session({
+secret: "thisismysecrctekey",
+saveUninitialized:true,
+cookie: { maxAge: oneDay },
+resave: false
+}));
 
+app.use(cookieParser());
 // Middleware to check if user is logged in
 const isLoggedIn = (req, res, next) => {
   if (req.session.user) {
@@ -78,8 +73,7 @@ app.post('/login', (req, res) => {
         const userData = doc.data();
         if (userData.username === username && userData.password === password) {
           req.session.user = username; // Start session
-          // res.redirect('/form_one'); // Redirect to dashboard after successful login
-          res.json({ message: 'Form submitted successfully!' });
+          res.redirect('/form_one'); // Redirect to dashboard after successful login
         } else {
           res.status(401).send('Invalid credentials');
         }
@@ -94,6 +88,7 @@ app.post('/login', (req, res) => {
 // Apply the isLoggedIn middleware to all routes requiring authentication
 app.use(isLoggedIn);
 
+// Define other routes...
 app.get('/form_one', (req, res) => {
   res.render('form_one');
 });
