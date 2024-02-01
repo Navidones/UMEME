@@ -3,7 +3,6 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const admin = require('firebase-admin');
 const multer = require('multer');
-const session = require('express-session');
 const cookieParser = require("cookie-parser");
 const http = require('http');
 
@@ -85,7 +84,6 @@ app.post('/login', (req, res) => {
     });
 });
 
-// Apply the isLoggedIn middleware to all routes requiring authentication
 app.use(isLoggedIn);
 
 // Define other routes...
