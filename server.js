@@ -3,8 +3,8 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const admin = require('firebase-admin');
 const multer = require('multer');
-const cookieParser = require("cookie-parser");
-const http = require('http');
+const session = require('express-session');
+// const cors = require('cors');
 
 const { PDFDocument, rgb } = require("pdf-lib");
 const { writeFileSync } = require("fs");
@@ -26,23 +26,31 @@ const upload = multer({ storage: storage });
 
 app.set("trust proxy", 1); // trust first proxy
 
-const oneDay = 1000 * 60 * 60 * 24;
+// Apply session middleware
 app.use(session({
-secret: "thisismysecrctekey",
-saveUninitialized:true,
-cookie: { maxAge: oneDay },
-resave: false
+  secret: 'fbndfvu4i3u49vnlbn929JPMC3489FP93GH',
+  resave: false,
+  saveUninitialized: true,
+  proxy: true, // Required for Heroku & Digital Ocean (regarding X-Forwarded-For)
+  name: 'MyCoolWebAppCookieName', // This needs to be unique per-host.
+  cookie: {
+    secure: true, // required for cookies to work on HTTPS
+    httpOnly: true, // recommended for session cookies
+    sameSite: 'none' // required for cross-site cookies
+  }
 }));
 
-app.use(cookieParser());
+// Enable CORS with credentials
+// app.use(cors({ origin: 'https://lazy-plum-coral-wear.cyclic.app', credentials: true }));
+
 // Middleware to check if user is logged in
-const isLoggedIn = (req, res, next) => {
-  if (req.session.user) {
-    next(); // User is authenticated, proceed to next middleware
-  } else {
-    res.redirect('/'); // Redirect to login if not authenticated
-  }
-};
+// const isLoggedIn = (req, res, next) => {
+//   if (req.session.user) {
+//     next(); // User is authenticated, proceed to next middleware
+//   } else {
+//     res.redirect('/'); // Redirect to login if not authenticated
+//   }
+// };
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.json());
@@ -84,7 +92,8 @@ app.post('/login', (req, res) => {
     });
 });
 
-app.use(isLoggedIn);
+// Apply the isLoggedIn middleware to all routes requiring authentication
+// app.use(isLoggedIn);
 
 // Define other routes...
 app.get('/form_one', (req, res) => {
